@@ -206,21 +206,29 @@ router.get('/state/:state/stats', async (req: Request, res: Response) => {
   try {
     const { state } = req.params;
 
-    let query = `
-      SELECT pc.id, pc.name, pc.slug, pc.icon, COUNT(b.id) as business_count
-      FROM categories pc
-      LEFT JOIN categories c ON c.parent_id = pc.id
-      LEFT JOIN businesses b ON b.category_id = c.id
-    `;
+    let query: string;
     const params: string[] = [];
 
     if (state !== 'ALL') {
-      query += ` AND b.state = $1`;
+      query = `
+        SELECT pc.id, pc.name, pc.slug, pc.icon, COUNT(b.id) as business_count
+        FROM categories pc
+        LEFT JOIN categories c ON c.parent_id = pc.id
+        LEFT JOIN businesses b ON b.category_id = c.id AND b.state = $1
+        WHERE pc.parent_id IS NULL
+        GROUP BY pc.id, pc.name, pc.slug, pc.icon ORDER BY pc.name ASC
+      `;
       params.push(state);
+    } else {
+      query = `
+        SELECT pc.id, pc.name, pc.slug, pc.icon, COUNT(b.id) as business_count
+        FROM categories pc
+        LEFT JOIN categories c ON c.parent_id = pc.id
+        LEFT JOIN businesses b ON b.category_id = c.id
+        WHERE pc.parent_id IS NULL
+        GROUP BY pc.id, pc.name, pc.slug, pc.icon ORDER BY pc.name ASC
+      `;
     }
-
-    query += ` WHERE pc.parent_id IS NULL`;
-    query += ` GROUP BY pc.id, pc.name, pc.slug, pc.icon ORDER BY pc.name ASC`;
 
     const result = await pool.query(query, params);
     res.json(result.rows);
