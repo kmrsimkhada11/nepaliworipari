@@ -2359,3 +2359,54 @@ body {
   border-radius: 50px;
   font-size: 0.8rem;
 }
+
+
+/* Social Media Icons */
+.social-icons {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.social-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.social-icon:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.social-icon.facebook:hover {
+  background: #1877f2;
+  color: white;
+}
+
+.social-icon.instagram:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: white;
+}
+
+.social-icon.tiktok:hover {
+  background: #000;
+  color: #69c9d0;
+}
+
+.social-icon.email:hover {
+  background: #dc143c;
+  color: white;
+}
