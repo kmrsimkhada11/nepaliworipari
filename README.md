@@ -90,8 +90,8 @@ We recommend [VS Code](https://code.visualstudio.com/) or any editor of your cho
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/kmrsimkhada/NepaliWoriPari.git
-cd NepaliWoriPari
+git clone https://github.com/kmrsimkhada/NepaliOriPari.git
+cd NepaliOriPari
 ```
 
 ### 2. Create the database

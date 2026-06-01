@@ -291,7 +291,7 @@ function AppContent() {
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-brand">
-            <h3>🇳🇵 NepaliWoriPari</h3>
+            <h3>🇳🇵 NepaliOriPari</h3>
             <p>Connecting the Nepali community with trusted local businesses across Australia.</p>
           </div>
           <div className="footer-links">
@@ -312,7 +312,7 @@ function AppContent() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} NepaliWoriPari. Made with ❤️ for the Nepali community in Australia.</p>
+          <p>© {new Date().getFullYear()} NepaliOriPari. Made with ❤️ for the Nepali community in Australia.</p>
         </div>
       </footer>
       <RegisterBusiness

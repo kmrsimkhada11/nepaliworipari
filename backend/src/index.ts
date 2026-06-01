@@ -48,7 +48,7 @@ app.use('/api/service-posts', servicePostsRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', message: 'NepaliWoriPari API is running' });
+  res.json({ status: 'ok', message: 'NepaliOriPari API is running' });
 });
 
 // Socket.IO for real-time chat

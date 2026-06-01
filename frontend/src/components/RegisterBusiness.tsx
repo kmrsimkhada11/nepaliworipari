@@ -109,7 +109,7 @@ export function RegisterBusiness({ show, onClose, onSuccess }: RegisterBusinessP
         {step === 'form' && (
           <>
             <h2 className="modal-title">📋 List Your Business</h2>
-            <p className="modal-subtitle">Add your business to NepaliWoriPari directory</p>
+            <p className="modal-subtitle">Add your business to NepaliOriPari directory</p>
 
             <form onSubmit={handleSubmit} className="register-form">
               <div className="form-group">
@@ -197,7 +197,7 @@ export function RegisterBusiness({ show, onClose, onSuccess }: RegisterBusinessP
           <div className="register-success">
             <span className="success-icon">✅</span>
             <h2>Business Registered!</h2>
-            <p>Your business has been added to NepaliWoriPari. Thank you!</p>
+            <p>Your business has been added to NepaliOriPari. Thank you!</p>
           </div>
         )}
       </div>
