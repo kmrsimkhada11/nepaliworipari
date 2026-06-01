@@ -181,7 +181,14 @@ function AppContent() {
       <div className="app">
         <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} />
         <main className="main-content">
-          <p>Loading...</p>
+          <CategoryGrid
+            parentCategories={parentCategories}
+            subcategories={[]}
+            selectedParent={null}
+            selectedSubcategory={null}
+            onParentSelect={handleParentSelect}
+            onSubcategorySelect={handleSubcategorySelect}
+          />
         </main>
       </div>
     );
