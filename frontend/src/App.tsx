@@ -295,14 +295,6 @@ function AppContent() {
             <p>Connecting the Nepali community with trusted local businesses across Australia.</p>
           </div>
           <div className="footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li>List Your Business</li>
-              <li>About Us</li>
-              <li>Contact</li>
-            </ul>
-          </div>
-          <div className="footer-links">
             <h4>Community</h4>
             <div className="social-icons">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon facebook" aria-label="Facebook">
