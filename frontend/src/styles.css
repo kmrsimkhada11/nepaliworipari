@@ -50,9 +50,9 @@ body {
 
 /* Header */
 .header {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  background: #1a1a2e;
   color: var(--color-white);
-  padding: 1.5rem 2rem;
+  padding: 1rem 2rem;
   box-shadow: var(--shadow-lg);
 }
 
