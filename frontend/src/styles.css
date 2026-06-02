@@ -706,6 +706,7 @@ body {
 
   .header-content {
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     gap: 0;
   }
@@ -716,6 +717,7 @@ body {
 
   .header-controls {
     gap: 0.4rem;
+    margin-left: auto;
   }
 
   .header-controls .user-menu {
