@@ -776,6 +776,8 @@ body {
 
   .filters-left .location-toggle {
     flex-shrink: 0;
+    min-width: 100px;
+    justify-content: center;
   }
 
   .filters-left .register-btn,
@@ -793,6 +795,15 @@ body {
   .search-bar {
     flex: 1;
     width: 100%;
+  }
+
+  .search-bar .search-input {
+    flex: 1;
+  }
+
+  .search-bar .search-button {
+    flex-shrink: 0;
+    min-width: 100px;
   }
 
   .location-toggle {
