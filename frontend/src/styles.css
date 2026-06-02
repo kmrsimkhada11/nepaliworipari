@@ -799,20 +799,26 @@ body {
   }
 
   .category-grid {
-    gap: 0.4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
   }
 
   .category-card {
-    padding: 0.45rem 0.75rem;
-    font-size: 0.7rem;
+    padding: 0.75rem;
+    font-size: 0.8rem;
+    border-radius: 14px;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.3rem;
   }
 
   .category-icon {
-    font-size: 0.9rem;
+    font-size: 1.4rem;
   }
 
   .category-name {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
   }
 
   .subcategory-section {
