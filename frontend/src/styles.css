@@ -2495,3 +2495,22 @@ body {
   background: #003893;
   color: white;
 }
+
+
+/* Edit Button */
+.edit-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  padding: 0.375rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--color-text-light);
+  transition: all 0.2s;
+}
+
+.edit-btn:hover {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+  background: var(--color-accent);
+}

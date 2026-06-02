@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Business } from '../types';
 import { ReviewSection } from './ReviewSection';
 import { ChatModal } from './ChatModal';
+import { EditBusiness } from './EditBusiness';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE } from '../config';
 
@@ -13,10 +14,12 @@ export function BusinessCard({ business }: BusinessCardProps) {
   const { user, token } = useAuth();
   const [showReviews, setShowReviews] = useState(false);
   const [showChat, setShowChat] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
   const [requesting, setRequesting] = useState(false);
   const [requestStatus, setRequestStatus] = useState<string | null>(null);
 
   const isSeeker = user?.role === 'seeker';
+  const isOwner = user?.id === business.user_id;
   const canChat = isSeeker && business.user_id && business.user_id !== user?.id;
 
   const handleRequestService = async () => {
@@ -118,6 +121,11 @@ export function BusinessCard({ business }: BusinessCardProps) {
                   : '📋 Request Service'}
               </button>
             )}
+            {isOwner && (
+              <button className="edit-btn" onClick={() => setShowEdit(true)}>
+                ✏️ Edit
+              </button>
+            )}
           </div>
           {business.is_featured && <span className="featured-badge">⭐ Featured</span>}
         </div>
@@ -135,6 +143,14 @@ export function BusinessCard({ business }: BusinessCardProps) {
           businessId={business.id}
           businessName={business.name}
           providerId={business.user_id!}
+        />
+      )}
+      {isOwner && (
+        <EditBusiness
+          business={business}
+          show={showEdit}
+          onClose={() => setShowEdit(false)}
+          onSuccess={() => window.location.reload()}
         />
       )}
     </>
