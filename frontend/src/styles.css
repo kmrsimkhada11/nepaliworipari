@@ -623,8 +623,9 @@ body {
 .footer-content {
   max-width: 1280px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 2rem;
   margin-bottom: 2rem;
 }
