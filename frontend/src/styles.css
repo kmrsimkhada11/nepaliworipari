@@ -729,6 +729,10 @@ body {
     display: none;
   }
 
+  .header-controls .user-menu {
+    margin-left: auto;
+  }
+
   .header-auth {
     display: none;
   }
