@@ -955,8 +955,16 @@ body {
     gap: 0.5rem;
   }
 
+  .register-form .form-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
   .auth-form .form-group select,
-  .auth-form .form-group input {
+  .auth-form .form-group input,
+  .register-form .form-group select,
+  .register-form .form-group input,
+  .register-form .form-group textarea {
     width: 100%;
     font-size: 16px;
   }
