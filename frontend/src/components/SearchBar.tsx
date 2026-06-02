@@ -7,12 +7,10 @@ interface SearchBarProps {
 export function SearchBar({ onSearch }: SearchBarProps) {
   const [query, setQuery] = useState('');
 
-  // Debounced search - triggers 400ms after user stops typing
   useEffect(() => {
     const timer = setTimeout(() => {
       onSearch(query);
     }, 400);
-
     return () => clearTimeout(timer);
   }, [query, onSearch]);
 
@@ -27,28 +25,36 @@ export function SearchBar({ onSearch }: SearchBarProps) {
   };
 
   return (
-    <form className="search-bar" onSubmit={handleSubmit} role="search">
-      <input
-        type="text"
-        className="search-input"
-        placeholder="Search businesses by name or description..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        aria-label="Search businesses"
-      />
-      <button type="submit" className="search-button" aria-label="Search">
-        🔍 Search
-      </button>
-      {query && (
-        <button
-          type="button"
-          className="clear-button"
-          onClick={handleClear}
-          aria-label="Clear search"
-        >
-          ✕
+    <div className="search-wrapper">
+      <form className="search-bar" onSubmit={handleSubmit} role="search">
+        <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search services, businesses..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          aria-label="Search businesses"
+        />
+        {query && (
+          <button
+            type="button"
+            className="clear-button"
+            onClick={handleClear}
+            aria-label="Clear search"
+          >
+            ✕
+          </button>
+        )}
+      </form>
+      <div className="search-button-row">
+        <button type="button" className="search-button" onClick={handleSubmit as () => void}>
+          Search
         </button>
-      )}
-    </form>
+      </div>
+    </div>
   );
 }
