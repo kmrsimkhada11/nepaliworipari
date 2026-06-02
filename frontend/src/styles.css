@@ -722,7 +722,7 @@ body {
     gap: 0.4rem;
   }
 
-  .header-controls .user-menu {
+  .header-controls .user-menu .logout-btn {
     display: none;
   }
 
