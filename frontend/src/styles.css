@@ -295,26 +295,25 @@ body {
 }
 
 .category-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
   max-width: 100%;
 }
 
 .category-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.65rem 1.1rem;
+  padding: 1.25rem 1rem;
   background: var(--color-white);
   border: 2px solid var(--color-border);
-  border-radius: 24px;
+  border-radius: 16px;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--color-text);
-  white-space: nowrap;
+  text-align: center;
 }
 
 .category-card::before {
@@ -342,12 +341,12 @@ body {
 }
 
 .category-icon {
-  font-size: 1.1rem;
+  font-size: 2rem;
   line-height: 1;
 }
 
 .category-name {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: inherit;
   line-height: 1.3;
