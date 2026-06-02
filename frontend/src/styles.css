@@ -707,6 +707,11 @@ body {
   .header-content {
     flex-wrap: nowrap;
     gap: 0;
+    width: 100%;
+  }
+
+  .header-brand {
+    flex: 1;
   }
 
   .header-logo .logo-img {
@@ -715,10 +720,13 @@ body {
 
   .header-controls {
     gap: 0.4rem;
-    margin-left: auto;
   }
 
   .header-controls .user-menu {
+    display: none;
+  }
+
+  .header-auth {
     display: none;
   }
 
