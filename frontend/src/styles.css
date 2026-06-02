@@ -2480,3 +2480,18 @@ body {
   background: #000;
   color: #69c9d0;
 }
+
+.business-social.phone:hover {
+  background: #10b981;
+  color: white;
+}
+
+.business-social.email:hover {
+  background: #dc143c;
+  color: white;
+}
+
+.business-social.website:hover {
+  background: #003893;
+  color: white;
+}
