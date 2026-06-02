@@ -3,7 +3,6 @@ import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
 import { CategoryGrid } from './components/CategoryGrid';
 import { BusinessList } from './components/BusinessList';
-import { LocationFilter } from './components/LocationFilter';
 import { RegisterBusiness } from './components/RegisterBusiness';
 import { AuthModal } from './components/AuthModal';
 import { ChatInbox } from './components/ChatInbox';
@@ -34,7 +33,7 @@ function AppContent() {
   const [locationEnabled, setLocationEnabled] = useState(false);
   const [userLat, setUserLat] = useState<number | null>(null);
   const [userLng, setUserLng] = useState<number | null>(null);
-  const [radius, setRadius] = useState(10);
+  const [radius] = useState(10);
   const [showRegister, setShowRegister] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
@@ -151,20 +150,21 @@ function AppContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleLocationToggle = (enabled: boolean, lat?: number, lng?: number) => {
-    setLocationEnabled(enabled);
-    if (enabled && lat !== undefined && lng !== undefined) {
-      setUserLat(lat);
-      setUserLng(lng);
+  const handleLocationToggle = () => {
+    if (!locationEnabled) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          setUserLat(pos.coords.latitude);
+          setUserLng(pos.coords.longitude);
+          setLocationEnabled(true);
+        },
+        () => { /* silently fail */ }
+      );
     } else {
+      setLocationEnabled(false);
       setUserLat(null);
       setUserLng(null);
     }
-    setCurrentPage(1);
-  };
-
-  const handleRadiusChange = (newRadius: number) => {
-    setRadius(newRadius);
     setCurrentPage(1);
   };
 
@@ -179,7 +179,7 @@ function AppContent() {
   if (authLoading) {
     return (
       <div className="app">
-        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={() => {}} />
+        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} />
         <main className="main-content">
           <CategoryGrid
             parentCategories={parentCategories}
@@ -196,7 +196,7 @@ function AppContent() {
 
   return (
     <div className="app">
-      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={() => {}} />
+      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} />
       <main className="main-content">
         {isProvider && user ? (
           <>
@@ -217,24 +217,11 @@ function AppContent() {
         ) : (
           <>
             <div className="filters-row">
-              <div className="filters-left">
-                <LocationFilter
-                  locationEnabled={locationEnabled}
-                  radius={radius}
-                  onLocationToggle={handleLocationToggle}
-                  onRadiusChange={handleRadiusChange}
-                />
-                {!user && (
-                  <button className="register-btn" onClick={handleListBusinessClick}>
-                    + List Your Business
-                  </button>
-                )}
-                {user?.role === 'seeker' && (
-                  <button className="register-btn post-needed-btn" onClick={() => setShowPostNeeded(true)}>
-                    🔍 Post What You Need
-                  </button>
-                )}
-              </div>
+              {user?.role === 'seeker' && (
+                <button className="register-btn post-needed-btn" onClick={() => setShowPostNeeded(true)}>
+                  🔍 Post What You Need
+                </button>
+              )}
               <SearchBar onSearch={handleSearch} />
             </div>
 

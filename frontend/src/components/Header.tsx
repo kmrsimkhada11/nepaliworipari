@@ -83,9 +83,9 @@ export function Header({ selectedState, onStateChange, onLoginClick, onMessagesC
         </div>
       </header>
 
-      {/* Side Menu */}
+      {/* Side Menu Overlay - mobile only */}
       {menuOpen && <div className="side-menu-overlay" onClick={() => setMenuOpen(false)} />}
-      <div className={`side-menu ${menuOpen ? 'open' : ''}`}>
+      <aside className={`side-menu ${menuOpen ? 'open' : ''}`}>
         <button className="side-menu-close" onClick={() => setMenuOpen(false)}>✕</button>
         <nav className="side-menu-nav">
           <div className="side-menu-section">
@@ -107,7 +107,7 @@ export function Header({ selectedState, onStateChange, onLoginClick, onMessagesC
             ➕ List Your Business
           </button>
         </nav>
-      </div>
+      </aside>
     </>
   );
 }

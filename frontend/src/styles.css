@@ -2563,15 +2563,15 @@ body {
 .side-menu {
   position: fixed;
   top: 0;
-  right: -280px;
-  width: 280px;
+  left: 0;
+  width: 240px;
   height: 100vh;
   background: var(--color-white);
-  z-index: 1200;
-  transition: right 0.3s ease;
-  padding: 1.5rem;
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  padding: 1.5rem 1rem;
+  border-right: 1px solid var(--color-border);
   overflow-y: auto;
+  padding-top: 1rem;
 }
 
 .side-menu.open {
@@ -2579,23 +2579,10 @@ body {
 }
 
 .side-menu-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  font-size: 1.25rem;
-  cursor: pointer;
-  color: var(--color-text-light);
-  padding: 0.25rem;
-}
-
-.side-menu-close:hover {
-  color: var(--color-text);
+  display: none;
 }
 
 .side-menu-nav {
-  margin-top: 2.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -2608,7 +2595,7 @@ body {
 }
 
 .side-menu-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: var(--color-text-light);
   text-transform: uppercase;
@@ -2619,10 +2606,10 @@ body {
 
 .side-menu-select {
   width: 100%;
-  padding: 0.6rem 0.75rem;
+  padding: 0.5rem 0.6rem;
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-sm);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   color: var(--color-text);
   background: white;
 }
@@ -2632,11 +2619,11 @@ body {
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.65rem 0.75rem;
   background: none;
   border: none;
   border-radius: var(--radius-sm);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: var(--color-text);
   cursor: pointer;
@@ -2648,6 +2635,16 @@ body {
   background: var(--color-accent);
 }
 
+/* App layout with sidebar */
+.app-body {
+  display: flex;
+  min-height: calc(100vh - 120px);
+}
+
+.app-body .main-content {
+  margin-left: 240px;
+}
+
 @media (max-width: 768px) {
   .hamburger-btn {
     display: flex;
@@ -2655,5 +2652,41 @@ body {
 
   .desktop-only {
     display: none;
+  }
+
+  .side-menu-overlay {
+    display: block;
+  }
+
+  .side-menu {
+    position: fixed;
+    left: auto;
+    right: -280px;
+    width: 280px;
+    z-index: 1200;
+    border-right: none;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    padding-top: 1.5rem;
+    transition: right 0.3s ease;
+  }
+
+  .side-menu.open {
+    right: 0;
+  }
+
+  .side-menu-close {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    color: var(--color-text-light);
+  }
+
+  .app-body .main-content {
+    margin-left: 0;
   }
 }
