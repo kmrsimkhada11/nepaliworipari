@@ -2515,10 +2515,11 @@ body {
   transition: all 0.2s;
   padding: 0;
   z-index: 1;
+  transform: scaleX(-1);
 }
 
 .edit-btn-top:hover {
   border-color: var(--color-secondary);
   background: var(--color-accent);
-  transform: scale(1.1);
+  transform: scaleX(-1) scale(1.1);
 }
