@@ -196,6 +196,16 @@ const migrate = async () => {
       CREATE INDEX IF NOT EXISTS idx_service_posts_category ON service_posts(category_id);
     `);
 
+    // Add social media columns if they don't exist
+    await client.query(`
+      DO $$ BEGIN
+        ALTER TABLE businesses ADD COLUMN IF NOT EXISTS facebook VARCHAR(255);
+        ALTER TABLE businesses ADD COLUMN IF NOT EXISTS instagram VARCHAR(255);
+        ALTER TABLE businesses ADD COLUMN IF NOT EXISTS tiktok VARCHAR(255);
+      EXCEPTION WHEN duplicate_column THEN NULL;
+      END $$;
+    `);
+
     await client.query('COMMIT');
     console.log('Migration completed successfully (non-destructive)');
   } catch (error) {

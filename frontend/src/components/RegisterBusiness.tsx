@@ -28,6 +28,9 @@ export function RegisterBusiness({ show, onClose, onSuccess }: RegisterBusinessP
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
   const [website, setWebsite] = useState('');
+  const [facebook, setFacebook] = useState('');
+  const [instagram, setInstagram] = useState('');
+  const [tiktok, setTiktok] = useState('');
 
   // Fetch parent categories on open
   useEffect(() => {
@@ -65,7 +68,7 @@ export function RegisterBusiness({ show, onClose, onSuccess }: RegisterBusinessP
           'Content-Type': 'application/json',
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-        body: JSON.stringify({ name, phone, email, categoryId: parseInt(categoryId), state, city, address, description, website }),
+        body: JSON.stringify({ name, phone, email, categoryId: parseInt(categoryId), state, city, address, description, website, facebook, instagram, tiktok }),
       });
       const data = await res.json();
 
@@ -97,6 +100,9 @@ export function RegisterBusiness({ show, onClose, onSuccess }: RegisterBusinessP
     setAddress('');
     setDescription('');
     setWebsite('');
+    setFacebook('');
+    setInstagram('');
+    setTiktok('');
     setError('');
     onClose();
   };
@@ -189,6 +195,21 @@ export function RegisterBusiness({ show, onClose, onSuccess }: RegisterBusinessP
               <div className="form-group">
                 <label htmlFor="reg-website">Website (optional)</label>
                 <input id="reg-website" type="url" value={website} onChange={(e) => setWebsite(e.target.value)} placeholder="https://www.example.com" />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="reg-facebook">Facebook (optional)</label>
+                <input id="reg-facebook" type="url" value={facebook} onChange={(e) => setFacebook(e.target.value)} placeholder="https://facebook.com/yourbusiness" />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="reg-instagram">Instagram (optional)</label>
+                <input id="reg-instagram" type="url" value={instagram} onChange={(e) => setInstagram(e.target.value)} placeholder="https://instagram.com/yourbusiness" />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="reg-tiktok">TikTok (optional)</label>
+                <input id="reg-tiktok" type="url" value={tiktok} onChange={(e) => setTiktok(e.target.value)} placeholder="https://tiktok.com/@yourbusiness" />
               </div>
 
               {error && <p className="form-error">{error}</p>}

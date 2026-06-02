@@ -85,6 +85,21 @@ export function BusinessCard({ business }: BusinessCardProps) {
               🌐 Website
             </a>
           )}
+          {business.facebook && (
+            <a href={business.facebook} target="_blank" rel="noopener noreferrer" className="business-social">
+              📘 Facebook
+            </a>
+          )}
+          {business.instagram && (
+            <a href={business.instagram} target="_blank" rel="noopener noreferrer" className="business-social">
+              📷 Instagram
+            </a>
+          )}
+          {business.tiktok && (
+            <a href={business.tiktok} target="_blank" rel="noopener noreferrer" className="business-social">
+              🎵 TikTok
+            </a>
+          )}
         </div>
         <div className="business-card-footer">
           <div className="business-card-actions">

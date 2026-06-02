@@ -19,6 +19,9 @@ export interface Business {
   phone: string;
   email: string;
   website: string;
+  facebook: string;
+  instagram: string;
+  tiktok: string;
   description: string;
   image_url: string;
   latitude: number | null;

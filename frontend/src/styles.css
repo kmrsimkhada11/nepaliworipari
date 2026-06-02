@@ -2445,3 +2445,17 @@ body {
   background: #dc143c;
   color: white;
 }
+
+
+/* Business card social links */
+.business-social {
+  font-size: 0.8rem;
+  color: var(--color-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.business-social:hover {
+  color: var(--color-primary);
+}
