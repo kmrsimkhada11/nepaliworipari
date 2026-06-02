@@ -2498,19 +2498,27 @@ body {
 
 
 /* Edit Button */
-.edit-btn {
-  background: none;
+.edit-btn-top {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--color-white);
   border: 1px solid var(--color-border);
-  padding: 0.375rem 0.75rem;
-  border-radius: 50px;
-  font-size: 0.8rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 0.85rem;
   cursor: pointer;
-  color: var(--color-text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.2s;
+  padding: 0;
+  z-index: 1;
 }
 
-.edit-btn:hover {
+.edit-btn-top:hover {
   border-color: var(--color-secondary);
-  color: var(--color-secondary);
   background: var(--color-accent);
+  transform: scale(1.1);
 }

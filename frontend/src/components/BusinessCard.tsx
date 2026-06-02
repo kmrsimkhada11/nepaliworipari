@@ -50,6 +50,11 @@ export function BusinessCard({ business }: BusinessCardProps) {
   return (
     <>
       <article className="business-card">
+        {isOwner && (
+          <button className="edit-btn edit-btn-top" onClick={() => setShowEdit(true)}>
+            ✏️
+          </button>
+        )}
         <div className="business-card-header">
           <span className="business-category-icon">{business.category_icon}</span>
           <div className="business-card-meta">
@@ -119,11 +124,6 @@ export function BusinessCard({ business }: BusinessCardProps) {
                   : requesting
                   ? 'Requesting...'
                   : '📋 Request Service'}
-              </button>
-            )}
-            {isOwner && (
-              <button className="edit-btn" onClick={() => setShowEdit(true)}>
-                ✏️ Edit
               </button>
             )}
           </div>
