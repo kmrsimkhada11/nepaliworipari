@@ -25,7 +25,7 @@ export function Header({ selectedState, onStateChange, onLoginClick, onMessagesC
         <div className="header-content">
           <div className="header-brand">
             <div className="header-logo">
-              <img src="/logo.png" alt="NepaliOriPari" className="logo-img" />
+              <img src="/logo.svg" alt="NepaliOriPari" className="logo-img" />
             </div>
           </div>
           <div className="header-controls">
