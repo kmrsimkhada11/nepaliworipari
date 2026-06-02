@@ -767,24 +767,38 @@ body {
   }
 
   .filters-left {
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 0.5rem;
     width: 100%;
-    align-items: center;
   }
 
   .location-toggle,
-  .register-btn {
+  .register-btn,
+  .post-needed-btn {
     font-size: 0.75rem;
-    padding: 0.5rem 0.75rem;
-    width: auto;
+    padding: 0.6rem 0.5rem;
+    width: 100%;
     text-align: center;
+    justify-content: center;
+    border-radius: 12px;
   }
 
   .search-bar {
     flex: 1;
     width: 100%;
+  }
+
+  .search-input {
+    font-size: 16px;
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+  }
+
+  .search-button {
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
   }
 
   .location-toggle {
