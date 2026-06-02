@@ -711,17 +711,17 @@ body {
   }
 
   .header-brand {
-    flex: 1;
-    min-width: 0;
+    flex-shrink: 0;
   }
 
   .header-logo .logo-img {
-    height: 50px;
-    max-width: 150px;
-    object-fit: contain;
+    height: 40px;
+    width: auto;
   }
 
   .header-controls {
+    flex: 1;
+    justify-content: flex-end;
     gap: 0.4rem;
   }
 
