@@ -29,51 +29,21 @@ export function Header({ selectedState, onStateChange, onLoginClick, onMessagesC
             </div>
           </div>
           <div className="header-controls">
-            {/* Desktop controls */}
-            <div className="desktop-only">
-              <label htmlFor="state-select" className="state-label">
-                State/Territory:
-              </label>
-              <select
-                id="state-select"
-                className="state-select"
-                value={selectedState}
-                onChange={(e) => onStateChange(e.target.value as AustralianState)}
-                aria-label="Select Australian state or territory"
-              >
-                {AUSTRALIAN_STATES.map((state) => (
-                  <option key={state.value} value={state.value}>
-                    {state.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="header-auth">
-              {user ? (
-                <div className="user-menu">
-                  <button className="auth-btn profile-btn" onClick={onProfileClick} title={user.name}>
-                    {user.name.charAt(0).toUpperCase()}
-                  </button>
-                  <button className="auth-btn messages-btn" onClick={onRequestsClick} title="Service Requests">
-                    📋
-                    {pendingRequests > 0 && <span className="notification-badge">{pendingRequests}</span>}
-                  </button>
-                  <button className="auth-btn messages-btn" onClick={onMessagesClick} title="Messages">
-                    💬
-                    {unreadMessages > 0 && <span className="notification-badge">{unreadMessages}</span>}
-                  </button>
-                  <button className="auth-btn logout-btn" onClick={logout}>
-                    Logout
-                  </button>
-                </div>
-              ) : (
-                <button className="auth-btn login-btn" onClick={onLoginClick}>
-                  <span className="login-text-full">Login / Sign Up</span>
-                  <span className="login-text-short">Login</span>
+            {user && (
+              <div className="user-menu">
+                <button className="auth-btn profile-btn" onClick={onProfileClick} title={user.name}>
+                  {user.name.charAt(0).toUpperCase()}
                 </button>
-              )}
-            </div>
-            {/* Hamburger - mobile only */}
+                <button className="auth-btn messages-btn" onClick={onRequestsClick} title="Service Requests">
+                  📋
+                  {pendingRequests > 0 && <span className="notification-badge">{pendingRequests}</span>}
+                </button>
+                <button className="auth-btn messages-btn" onClick={onMessagesClick} title="Messages">
+                  💬
+                  {unreadMessages > 0 && <span className="notification-badge">{unreadMessages}</span>}
+                </button>
+              </div>
+            )}
             <button className="hamburger-btn" onClick={() => setMenuOpen(true)} aria-label="Menu">
               <span></span>
               <span></span>
@@ -83,11 +53,18 @@ export function Header({ selectedState, onStateChange, onLoginClick, onMessagesC
         </div>
       </header>
 
-      {/* Side Menu Overlay - mobile only */}
+      {/* Side Menu */}
       {menuOpen && <div className="side-menu-overlay" onClick={() => setMenuOpen(false)} />}
       <aside className={`side-menu ${menuOpen ? 'open' : ''}`}>
         <button className="side-menu-close" onClick={() => setMenuOpen(false)}>✕</button>
         <nav className="side-menu-nav">
+          {user && (
+            <div className="side-menu-user">
+              <div className="side-menu-avatar">{user.name.charAt(0).toUpperCase()}</div>
+              <span className="side-menu-username">{user.name}</span>
+            </div>
+          )}
+
           <div className="side-menu-section">
             <label className="side-menu-label">State/Territory</label>
             <select
@@ -100,12 +77,23 @@ export function Header({ selectedState, onStateChange, onLoginClick, onMessagesC
               ))}
             </select>
           </div>
+
           <button className="side-menu-item" onClick={() => { onFindNearMe(); setMenuOpen(false); }}>
             📍 Find Near Me
           </button>
           <button className="side-menu-item" onClick={() => { onListBusinessClick(); setMenuOpen(false); }}>
             ➕ List Your Business
           </button>
+
+          {!user ? (
+            <button className="side-menu-item side-menu-login" onClick={() => { onLoginClick(); setMenuOpen(false); }}>
+              🔐 Login / Sign Up
+            </button>
+          ) : (
+            <button className="side-menu-item side-menu-logout" onClick={() => { logout(); setMenuOpen(false); }}>
+              🚪 Logout
+            </button>
+          )}
         </nav>
       </aside>
     </>
