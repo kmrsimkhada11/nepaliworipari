@@ -2449,13 +2449,34 @@ body {
 
 /* Business card social links */
 .business-social {
-  font-size: 0.8rem;
-  color: var(--color-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-text-light);
+  transition: all 0.2s;
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
 }
 
-.business-social:hover {
-  color: var(--color-primary);
+.business-social svg {
+  width: 16px;
+  height: 16px;
+}
+
+.business-social.facebook:hover {
+  background: #1877f2;
+  color: white;
+}
+
+.business-social.instagram:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: white;
+}
+
+.business-social.tiktok:hover {
+  background: #000;
+  color: #69c9d0;
 }
