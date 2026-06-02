@@ -50,11 +50,6 @@ export function SearchBar({ onSearch }: SearchBarProps) {
           </button>
         )}
       </form>
-      <div className="search-button-row">
-        <button type="button" className="search-button" onClick={handleSubmit as () => void}>
-          Search
-        </button>
-      </div>
     </div>
   );
 }
