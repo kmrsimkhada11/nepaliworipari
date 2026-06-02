@@ -25,6 +25,7 @@ export function RegisterBusiness({ show, onClose, onSuccess }: RegisterBusinessP
   const [categoryId, setCategoryId] = useState('');
   const [state, setState] = useState('QLD');
   const [city, setCity] = useState('');
+  const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
   const [website, setWebsite] = useState('');
 
@@ -64,7 +65,7 @@ export function RegisterBusiness({ show, onClose, onSuccess }: RegisterBusinessP
           'Content-Type': 'application/json',
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-        body: JSON.stringify({ name, phone, email, categoryId: parseInt(categoryId), state, city, description, website }),
+        body: JSON.stringify({ name, phone, email, categoryId: parseInt(categoryId), state, city, address, description, website }),
       });
       const data = await res.json();
 
@@ -93,6 +94,7 @@ export function RegisterBusiness({ show, onClose, onSuccess }: RegisterBusinessP
     setCategoryId('');
     setState('QLD');
     setCity('');
+    setAddress('');
     setDescription('');
     setWebsite('');
     setError('');
@@ -172,6 +174,11 @@ export function RegisterBusiness({ show, onClose, onSuccess }: RegisterBusinessP
                   <label htmlFor="reg-city">City/Suburb *</label>
                   <input id="reg-city" type="text" value={city} onChange={(e) => setCity(e.target.value)} required placeholder="e.g. Brisbane" />
                 </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="reg-address">Address (optional)</label>
+                <input id="reg-address" type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="e.g. 123 Main St" />
               </div>
 
               <div className="form-group">

@@ -7,7 +7,7 @@ const router = Router();
 // POST /api/register - Register a business directly (provider only)
 router.post('/', authenticate, requireProvider, async (req: AuthRequest, res: Response) => {
   try {
-    const { name, phone, email, categoryId, state, city, description, website, latitude, longitude } = req.body;
+    const { name, phone, email, categoryId, state, city, description, website, latitude, longitude, address } = req.body;
     const userId = req.user!.userId;
 
     // Validate required fields
@@ -27,10 +27,10 @@ router.post('/', authenticate, requireProvider, async (req: AuthRequest, res: Re
     }
 
     const result = await pool.query(
-      `INSERT INTO businesses (name, category_id, user_id, state, city, phone, email, description, website, latitude, longitude)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+      `INSERT INTO businesses (name, category_id, user_id, state, city, address, phone, email, description, website, latitude, longitude)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
        RETURNING id`,
-      [name, categoryId, userId, state, city, cleanPhone, email, description || null, website || null, latitude || null, longitude || null]
+      [name, categoryId, userId, state, city, address || null, cleanPhone, email, description || null, website || null, latitude || null, longitude || null]
     );
 
     res.status(201).json({

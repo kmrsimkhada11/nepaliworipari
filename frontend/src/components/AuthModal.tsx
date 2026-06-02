@@ -15,6 +15,7 @@ export function AuthModal({ show, onClose }: AuthModalProps) {
   const [phone, setPhone] = useState('');
   const [state, setState] = useState('');
   const [city, setCity] = useState('');
+  const [address, setAddress] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState<'seeker' | 'provider'>('seeker');
@@ -166,6 +167,17 @@ export function AuthModal({ show, onClose }: AuthModalProps) {
                     placeholder="e.g. Brisbane"
                   />
                 </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="auth-address">Address (optional)</label>
+                <input
+                  id="auth-address"
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="e.g. 123 Main St"
+                />
               </div>
             </>
           )}

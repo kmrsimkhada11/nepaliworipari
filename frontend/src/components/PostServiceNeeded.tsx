@@ -19,6 +19,7 @@ export function PostServiceNeeded({ show, onClose, onSuccess }: PostServiceNeede
   const [description, setDescription] = useState('');
   const [state, setState] = useState('QLD');
   const [city, setCity] = useState('');
+  const [address, setAddress] = useState('');
   const [budget, setBudget] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -155,6 +156,11 @@ export function PostServiceNeeded({ show, onClose, onSuccess }: PostServiceNeede
                   <label htmlFor="post-city">City/Suburb</label>
                   <input id="post-city" type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="e.g. Brisbane" />
                 </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="post-address">Address (optional)</label>
+                <input id="post-address" type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="e.g. 123 Main St" />
               </div>
 
               <div className="form-group">
