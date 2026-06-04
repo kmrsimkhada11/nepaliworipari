@@ -203,10 +203,10 @@ function AppContent() {
         <div className="filters-row">
           <div className="filters-actions">
             <button className="register-btn post-needed-btn" onClick={() => setShowPostNeeded(true)}>
-              🔍 Post What You Need
+              🔍 Looking for
             </button>
             <button className="register-btn" onClick={handleListBusinessClick}>
-              ➕ List Your Business
+              ➕ Listing
             </button>
             <button
               className={`register-btn location-btn ${locationEnabled ? 'active' : ''}`}
