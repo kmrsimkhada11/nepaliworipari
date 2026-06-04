@@ -44,11 +44,13 @@ export function ServiceWantedFeed() {
     }
   };
 
+  const filteredPosts = posts.filter(post => !user || post.seeker_id !== user.id);
+
   if (loading) {
     return <div className="loading"><div className="loading-spinner"></div><p>Loading requests...</p></div>;
   }
 
-  if (posts.length === 0) {
+  if (filteredPosts.length === 0) {
     return (
       <div className="empty-state">
         <span className="empty-icon">📋</span>
@@ -63,7 +65,7 @@ export function ServiceWantedFeed() {
       <div className="service-wanted-feed">
         <h2 className="section-title">🔍 People Looking for Services</h2>
         <div className="service-posts-grid">
-          {posts.map((post) => (
+          {filteredPosts.map((post) => (
             <div key={post.id} className="service-post-card">
               <div className="service-post-header">
                 {post.category_icon && <span className="service-post-icon">{post.category_icon}</span>}
