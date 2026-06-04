@@ -3087,7 +3087,12 @@ body {
 
   .filters-row-logout .search-wrapper {
     flex: 1;
-    margin: 0 0.25rem;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .filters-row-logout .search-wrapper .search-bar {
+    max-width: 100%;
   }
 
   .filters-row-logout .login-main-btn {
