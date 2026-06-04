@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE } from '../config';
 
+interface MyRequestsProps {
+  onPostClick: () => void;
+}
+
 interface MyPost {
   id: number;
   title: string;
@@ -15,7 +19,7 @@ interface MyPost {
   category_icon: string;
 }
 
-export function MyRequests() {
+export function MyRequests({ onPostClick }: MyRequestsProps) {
   const { user, token } = useAuth();
   const [posts, setPosts] = useState<MyPost[]>([]);
   const [loading, setLoading] = useState(false);
@@ -61,12 +65,17 @@ export function MyRequests() {
 
   return (
     <div className="my-requests-section">
-      <h2 className="section-title">My Requests</h2>
+      <div className="provider-dashboard-header">
+        <h2>My Requests</h2>
+        <button className="register-btn post-needed-btn" onClick={onPostClick}>
+          + Post What you are looking for
+        </button>
+      </div>
       <div className="my-requests-list">
         {loading ? (
           <p>Loading...</p>
         ) : posts.length === 0 ? (
-          <p className="my-requests-empty">No requests posted yet. Click "Post What you are looking for" to get started.</p>
+          <p className="my-requests-empty">No requests posted yet.</p>
         ) : (
           posts.map((post) => (
             <div key={post.id} className="my-request-card">

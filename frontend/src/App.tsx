@@ -269,7 +269,7 @@ function AppContent() {
           <>
 
             {/* My Requests - shows user's posted requests */}
-            <MyRequests />
+            <MyRequests onPostClick={() => setShowPostNeeded(true)} />
 
             {/* Breadcrumb navigation */}
             {(selectedParent || selectedSubcategory) && (
