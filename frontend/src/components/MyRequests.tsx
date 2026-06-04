@@ -71,35 +71,36 @@ export function MyRequests({ onPostClick }: MyRequestsProps) {
           + Post What you are looking for
         </button>
       </div>
-      <div className="my-requests-list">
+      <div className="business-grid">
         {loading ? (
           <p>Loading...</p>
         ) : posts.length === 0 ? (
           <p className="my-requests-empty">No requests posted yet.</p>
         ) : (
           posts.map((post) => (
-            <div key={post.id} className="my-request-card">
-              <div className="my-request-header">
-                <div>
-                  <h3>{post.title}</h3>
-                  <span className="my-request-meta">
-                    {post.category_icon} {post.category_name || 'General'} • 📍 {post.city || post.state}
-                  </span>
+            <article key={post.id} className="business-card">
+              <div className="business-card-header">
+                <span className="business-category-icon">{post.category_icon || '📋'}</span>
+                <div className="business-card-meta">
+                  <span className="business-category-tag">{post.category_name || 'General'}</span>
+                  <span className="business-location">📍 {post.city || post.state}</span>
                 </div>
-                <span className={`status-badge status-${post.status}`}>
-                  {post.status}
-                </span>
               </div>
-              {post.description && <p className="my-request-desc">{post.description}</p>}
-              <div className="my-request-footer">
-                <span className="my-request-date">{new Date(post.created_at).toLocaleDateString()}</span>
+              <h3 className="business-name">{post.title}</h3>
+              {post.description && <p className="business-description">{post.description}</p>}
+              {post.budget && <p className="business-description">💰 Budget: {post.budget}</p>}
+              <div className="business-card-footer">
+                <div className="business-card-actions">
+                  <span className={`status-badge status-${post.status}`}>{post.status}</span>
+                  <span className="review-btn">{new Date(post.created_at).toLocaleDateString()}</span>
+                </div>
                 {post.status === 'open' && (
-                  <button className="my-request-close-btn" onClick={() => handleClose(post.id)}>
-                    Close
+                  <button className="request-service-btn" onClick={() => handleClose(post.id)}>
+                    ✕ Close
                   </button>
                 )}
               </div>
-            </div>
+            </article>
           ))
         )}
       </div>
