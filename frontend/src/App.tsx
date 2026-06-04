@@ -202,23 +202,32 @@ function AppContent() {
         {/* Global filters - always visible */}
         <div className="filters-row">
           <div className="filters-actions">
-            <button
-              className={`register-btn location-btn ${locationEnabled ? 'active' : ''}`}
-              onClick={handleLocationToggle}
-            >
-              📍 {locationEnabled ? 'Near Me ✓' : 'Find Near Me'}
-            </button>
-            {locationEnabled && (
-              <select
-                className="radius-select"
-                value={radius}
-                onChange={(e) => { setRadius(parseInt(e.target.value)); setCurrentPage(1); }}
+            {!locationEnabled ? (
+              <button
+                className="register-btn location-btn"
+                onClick={handleLocationToggle}
               >
-                <option value="5">5 km</option>
-                <option value="10">10 km</option>
-                <option value="25">25 km</option>
-                <option value="50">50 km</option>
-                <option value="100">100 km</option>
+                📍 Find Near Me
+              </button>
+            ) : (
+              <select
+                className="register-btn location-btn active radius-dropdown"
+                value={radius}
+                onChange={(e) => {
+                  if (e.target.value === 'off') {
+                    handleLocationToggle();
+                  } else {
+                    setRadius(parseInt(e.target.value));
+                    setCurrentPage(1);
+                  }
+                }}
+              >
+                <option value="5">📍 5 km</option>
+                <option value="10">📍 10 km</option>
+                <option value="25">📍 25 km</option>
+                <option value="50">📍 50 km</option>
+                <option value="100">📍 100 km</option>
+                <option value="off">✕ Turn off</option>
               </select>
             )}
             <button className="register-btn post-needed-btn" onClick={() => setShowPostNeeded(true)}>
