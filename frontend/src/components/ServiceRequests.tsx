@@ -111,23 +111,26 @@ export function ServiceRequests({ show, onClose }: ServiceRequestsProps) {
                 {req.note && <p className="request-note">Note: {req.note}</p>}
                 <span className="request-date">{new Date(req.created_at).toLocaleDateString()}</span>
 
-                {isProvider && req.status === 'pending' && (
-                  <div className="request-actions">
-                    <button className="action-btn accept-btn" onClick={() => updateStatus(req.id, 'accepted')}>
-                      ✓ Accept
-                    </button>
-                    <button className="action-btn reject-btn" onClick={() => updateStatus(req.id, 'rejected')}>
-                      ✗ Reject
-                    </button>
-                  </div>
-                )}
-                {isProvider && req.status === 'accepted' && (
-                  <div className="request-actions">
+                <div className="request-actions">
+                  <button className="chat-view-btn" onClick={() => { navigate(`/business/${req.business_id}`); onClose(); }}>
+                    👁️ View
+                  </button>
+                  {isProvider && req.status === 'pending' && (
+                    <>
+                      <button className="action-btn accept-btn" onClick={() => updateStatus(req.id, 'accepted')}>
+                        ✓ Accept
+                      </button>
+                      <button className="action-btn reject-btn" onClick={() => updateStatus(req.id, 'rejected')}>
+                        ✗ Reject
+                      </button>
+                    </>
+                  )}
+                  {isProvider && req.status === 'accepted' && (
                     <button className="action-btn complete-btn" onClick={() => updateStatus(req.id, 'completed')}>
                       ✓ Mark Completed
                     </button>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             ))
           )}
