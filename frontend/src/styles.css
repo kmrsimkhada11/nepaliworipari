@@ -2873,11 +2873,9 @@ body {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -2885,26 +2883,12 @@ body {
 .business-section,
 .service-wanted-feed,
 .provider-dashboard-header,
-.filters-row,
 .breadcrumb {
+  animation: fadeIn 0.25s ease;
+}
+
+.category-grid,
+.business-grid,
+.service-posts-grid {
   animation: fadeIn 0.3s ease;
 }
-
-.category-card,
-.business-card,
-.service-post-card {
-  animation: fadeIn 0.3s ease backwards;
-}
-
-.category-card:nth-child(1) { animation-delay: 0.02s; }
-.category-card:nth-child(2) { animation-delay: 0.04s; }
-.category-card:nth-child(3) { animation-delay: 0.06s; }
-.category-card:nth-child(4) { animation-delay: 0.08s; }
-.category-card:nth-child(5) { animation-delay: 0.1s; }
-.category-card:nth-child(6) { animation-delay: 0.12s; }
-.category-card:nth-child(7) { animation-delay: 0.14s; }
-.category-card:nth-child(8) { animation-delay: 0.16s; }
-.category-card:nth-child(9) { animation-delay: 0.18s; }
-.category-card:nth-child(10) { animation-delay: 0.2s; }
-.category-card:nth-child(11) { animation-delay: 0.22s; }
-.category-card:nth-child(12) { animation-delay: 0.24s; }
