@@ -188,7 +188,7 @@ function AppContent() {
             selectedParent={null}
             selectedSubcategory={null}
             onParentSelect={handleParentSelect}
-            onSubcategorySelect={handleSubcategorySelect}
+            onSubcategorySelect={handleSubcategorySelect} onPostClick={() => setShowPostNeeded(true)}
           />
         </main>
       </div>
@@ -289,7 +289,7 @@ function AppContent() {
                 selectedParent={null}
                 selectedSubcategory={null}
                 onParentSelect={handleParentSelect}
-                onSubcategorySelect={handleSubcategorySelect}
+                onSubcategorySelect={handleSubcategorySelect} onPostClick={() => setShowPostNeeded(true)}
               />
             )}
 
@@ -301,7 +301,7 @@ function AppContent() {
                 selectedParent={selectedParent}
                 selectedSubcategory={null}
                 onParentSelect={handleParentSelect}
-                onSubcategorySelect={handleSubcategorySelect}
+                onSubcategorySelect={handleSubcategorySelect} onPostClick={() => setShowPostNeeded(true)}
               />
             )}
 

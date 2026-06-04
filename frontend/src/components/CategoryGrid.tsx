@@ -7,6 +7,7 @@ interface CategoryGridProps {
   selectedSubcategory: string | null;
   onParentSelect: (slug: string | null) => void;
   onSubcategorySelect: (slug: string | null) => void;
+  onPostClick?: () => void;
 }
 
 export function CategoryGrid({
@@ -15,6 +16,7 @@ export function CategoryGrid({
   selectedParent,
   onParentSelect,
   onSubcategorySelect,
+  onPostClick,
 }: CategoryGridProps) {
   // Show subcategories if a parent is selected
   if (selectedParent && subcategories.length > 0) {
@@ -46,7 +48,14 @@ export function CategoryGrid({
   // Show parent categories
   return (
     <section className="category-section" aria-label="Business categories">
-      <h2 className="section-title">Browse by Category</h2>
+      <div className="section-header">
+        <h2 className="section-title">Browse by Category</h2>
+        {onPostClick && (
+          <button className="register-btn post-needed-btn" onClick={onPostClick}>
+            📝 Post
+          </button>
+        )}
+      </div>
       <div className="category-grid">
         {parentCategories.map((category) => (
           <button

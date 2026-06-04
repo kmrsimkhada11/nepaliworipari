@@ -2892,3 +2892,16 @@ body {
 .service-posts-grid {
   animation: fadeIn 0.3s ease;
 }
+
+
+/* Section header with title and action */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.section-header .section-title {
+  margin-bottom: 0;
+}
