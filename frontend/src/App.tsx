@@ -33,7 +33,7 @@ function AppContent() {
   const [locationEnabled, setLocationEnabled] = useState(false);
   const [userLat, setUserLat] = useState<number | null>(null);
   const [userLng, setUserLng] = useState<number | null>(null);
-  const [radius] = useState(10);
+  const [radius, setRadius] = useState(10);
   const [showRegister, setShowRegister] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
@@ -43,7 +43,6 @@ function AppContent() {
   const [mode, setMode] = useState<'seeker' | 'provider'>('seeker');
 
   const isProvider = mode === 'provider';
-  const isSeeker = mode === 'seeker';
 
   // Fetch parent categories with business counts
   const loadParentCategories = useCallback(async () => {
@@ -219,11 +218,33 @@ function AppContent() {
         ) : (
           <>
             <div className="filters-row">
-              {isSeeker && (
+              <div className="filters-actions">
                 <button className="register-btn post-needed-btn" onClick={() => setShowPostNeeded(true)}>
                   🔍 Post What You Need
                 </button>
-              )}
+                <button className="register-btn" onClick={handleListBusinessClick}>
+                  ➕ List Your Business
+                </button>
+                <button
+                  className={`register-btn location-btn ${locationEnabled ? 'active' : ''}`}
+                  onClick={handleLocationToggle}
+                >
+                  📍 {locationEnabled ? 'Near Me ✓' : 'Find Near Me'}
+                </button>
+                {locationEnabled && (
+                  <select
+                    className="radius-select"
+                    value={radius}
+                    onChange={(e) => { setRadius(parseInt(e.target.value)); setCurrentPage(1); }}
+                  >
+                    <option value="5">5 km</option>
+                    <option value="10">10 km</option>
+                    <option value="25">25 km</option>
+                    <option value="50">50 km</option>
+                    <option value="100">100 km</option>
+                  </select>
+                )}
+              </div>
               <SearchBar onSearch={handleSearch} />
             </div>
 

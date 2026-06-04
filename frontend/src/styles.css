@@ -2786,3 +2786,39 @@ body {
   font-weight: 600;
   box-shadow: var(--shadow-sm);
 }
+
+
+/* Filters actions row */
+.filters-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.location-btn.active {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: white;
+}
+
+.radius-select {
+  padding: 0.4rem 0.6rem;
+  border: 2px solid var(--color-border);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  background: white;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .filters-actions {
+    gap: 0.4rem;
+  }
+
+  .filters-actions .register-btn {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+  }
+}
