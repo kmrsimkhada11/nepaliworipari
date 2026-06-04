@@ -57,7 +57,7 @@ export function MyRequests() {
     }
   };
 
-  if (!user || posts.length === 0) return null;
+  if (!user) return null;
 
   return (
     <div className="my-requests-section">
@@ -65,6 +65,8 @@ export function MyRequests() {
       <div className="my-requests-list">
         {loading ? (
           <p>Loading...</p>
+        ) : posts.length === 0 ? (
+          <p className="my-requests-empty">No requests posted yet. Click "Post What you are looking for" to get started.</p>
         ) : (
           posts.map((post) => (
             <div key={post.id} className="my-request-card">
