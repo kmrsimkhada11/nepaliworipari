@@ -240,11 +240,11 @@ function AppContent() {
                       }
                     }}
                   >
-                    <option value="5">📍 5 km</option>
-                    <option value="10">📍 10 km</option>
-                    <option value="25">📍 25 km</option>
-                    <option value="50">📍 50 km</option>
-                    <option value="100">📍 100 km</option>
+                    <option value="5">📍 5 km ▾</option>
+                    <option value="10">📍 10 km ▾</option>
+                    <option value="25">📍 25 km ▾</option>
+                    <option value="50">📍 50 km ▾</option>
+                    <option value="100">📍 100 km ▾</option>
                     <option value="off">✕ Turn off</option>
                   </select>
                 )}
@@ -272,11 +272,11 @@ function AppContent() {
                       }
                     }}
                   >
-                    <option value="5">📍 5 km</option>
-                    <option value="10">📍 10 km</option>
-                    <option value="25">📍 25 km</option>
-                    <option value="50">📍 50 km</option>
-                    <option value="100">📍 100 km</option>
+                    <option value="5">📍 5 km ▾</option>
+                    <option value="10">📍 10 km ▾</option>
+                    <option value="25">📍 25 km ▾</option>
+                    <option value="50">📍 50 km ▾</option>
+                    <option value="100">📍 100 km ▾</option>
                     <option value="off">✕ Turn off</option>
                   </select>
                 )}
