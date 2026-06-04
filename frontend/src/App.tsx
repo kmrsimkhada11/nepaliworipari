@@ -268,6 +268,9 @@ function AppContent() {
         ) : (
           <>
 
+            {/* My Requests - shows user's posted requests */}
+            <MyRequests />
+
             {/* Breadcrumb navigation */}
             {(selectedParent || selectedSubcategory) && (
               <div className="breadcrumb">
@@ -315,9 +318,6 @@ function AppContent() {
                 onPageChange={handlePageChange}
               />
             )}
-
-            {/* My Requests - shows user's posted requests */}
-            <MyRequests />
           </>
         )}
       </main>
