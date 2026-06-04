@@ -70,8 +70,8 @@ export function BusinessCard({ business }: BusinessCardProps) {
             <button className="edit-btn edit-btn-top" onClick={() => setShowEdit(true)}>
               ✏️
             </button>
-            <button className="delete-btn delete-btn-top" onClick={handleDeleteBusiness}>
-              🗑️
+            <button className="delete-btn-top" onClick={handleDeleteBusiness}>
+              ✕
             </button>
           </div>
         )}

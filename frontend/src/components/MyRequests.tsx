@@ -94,6 +94,14 @@ export function MyRequests({ onPostClick }: MyRequestsProps) {
         ) : (
           posts.map((post) => (
             <article key={post.id} className="business-card">
+              <div className="owner-actions-top">
+                <button className="edit-btn edit-btn-top" onClick={() => {}}>
+                  ✏️
+                </button>
+                <button className="delete-btn-top" onClick={() => handleDelete(post.id)}>
+                  ✕
+                </button>
+              </div>
               <div className="business-card-header">
                 <span className="business-category-icon">{post.category_icon || '📋'}</span>
                 <div className="business-card-meta">
@@ -112,16 +120,11 @@ export function MyRequests({ onPostClick }: MyRequestsProps) {
                     💬 Messages
                   </button>
                 </div>
-                <div className="business-card-actions">
-                  {post.status === 'open' && (
-                    <button className="request-service-btn" onClick={() => handleClose(post.id)}>
-                      ✕ Close
-                    </button>
-                  )}
-                  <button className="delete-btn" onClick={() => handleDelete(post.id)}>
-                    🗑️
+                {post.status === 'open' && (
+                  <button className="request-service-btn" onClick={() => handleClose(post.id)}>
+                    Mark Closed
                   </button>
-                </div>
+                )}
               </div>
             </article>
           ))
