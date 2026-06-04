@@ -337,7 +337,8 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 1.25rem 1rem;
+  aspect-ratio: 1;
+  padding: 1rem;
   background: var(--color-white);
   border: 2px solid var(--color-border);
   border-radius: 16px;
@@ -371,12 +372,12 @@ body {
 }
 
 .category-icon {
-  font-size: 2rem;
+  font-size: 2.5rem;
   line-height: 1;
 }
 
 .category-name {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: inherit;
   line-height: 1.3;
