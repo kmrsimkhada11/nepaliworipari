@@ -199,32 +199,40 @@ function AppContent() {
     <div className="app">
       <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} mode={mode} onModeChange={setMode} />
       <main className="main-content">
+        {/* Global filters - always visible */}
+        <div className="filters-row">
+          <div className="filters-actions">
+            <button className="register-btn post-needed-btn" onClick={() => setShowPostNeeded(true)}>
+              🔍 Post What You Need
+            </button>
+            <button className="register-btn" onClick={handleListBusinessClick}>
+              ➕ List Your Business
+            </button>
+            <button
+              className={`register-btn location-btn ${locationEnabled ? 'active' : ''}`}
+              onClick={handleLocationToggle}
+            >
+              📍 {locationEnabled ? 'Near Me ✓' : 'Find Near Me'}
+            </button>
+            {locationEnabled && (
+              <select
+                className="radius-select"
+                value={radius}
+                onChange={(e) => { setRadius(parseInt(e.target.value)); setCurrentPage(1); }}
+              >
+                <option value="5">5 km</option>
+                <option value="10">10 km</option>
+                <option value="25">25 km</option>
+                <option value="50">50 km</option>
+                <option value="100">100 km</option>
+              </select>
+            )}
+          </div>
+          <SearchBar onSearch={handleSearch} />
+        </div>
+
         {isProvider && user ? (
           <>
-            <div className="filters-row">
-              <div className="filters-actions">
-                <button
-                  className={`register-btn location-btn ${locationEnabled ? 'active' : ''}`}
-                  onClick={handleLocationToggle}
-                >
-                  📍 {locationEnabled ? 'Near Me ✓' : 'Find Near Me'}
-                </button>
-                {locationEnabled && (
-                  <select
-                    className="radius-select"
-                    value={radius}
-                    onChange={(e) => { setRadius(parseInt(e.target.value)); setCurrentPage(1); }}
-                  >
-                    <option value="5">5 km</option>
-                    <option value="10">10 km</option>
-                    <option value="25">25 km</option>
-                    <option value="50">50 km</option>
-                    <option value="100">100 km</option>
-                  </select>
-                )}
-              </div>
-              <SearchBar onSearch={handleSearch} />
-            </div>
             <div className="provider-dashboard-header">
               <h2>My Listed Businesses</h2>
               <button className="register-btn" onClick={handleListBusinessClick}>
@@ -241,36 +249,6 @@ function AppContent() {
           </>
         ) : (
           <>
-            <div className="filters-row">
-              <div className="filters-actions">
-                <button className="register-btn post-needed-btn" onClick={() => setShowPostNeeded(true)}>
-                  🔍 Post What You Need
-                </button>
-                <button className="register-btn" onClick={handleListBusinessClick}>
-                  ➕ List Your Business
-                </button>
-                <button
-                  className={`register-btn location-btn ${locationEnabled ? 'active' : ''}`}
-                  onClick={handleLocationToggle}
-                >
-                  📍 {locationEnabled ? 'Near Me ✓' : 'Find Near Me'}
-                </button>
-                {locationEnabled && (
-                  <select
-                    className="radius-select"
-                    value={radius}
-                    onChange={(e) => { setRadius(parseInt(e.target.value)); setCurrentPage(1); }}
-                  >
-                    <option value="5">5 km</option>
-                    <option value="10">10 km</option>
-                    <option value="25">25 km</option>
-                    <option value="50">50 km</option>
-                    <option value="100">100 km</option>
-                  </select>
-                )}
-              </div>
-              <SearchBar onSearch={handleSearch} />
-            </div>
 
             {/* Breadcrumb navigation */}
             {(selectedParent || selectedSubcategory) && (
