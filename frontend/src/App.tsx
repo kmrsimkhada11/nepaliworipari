@@ -201,7 +201,7 @@ function AppContent() {
       <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} />
       <main className="main-content">
         {/* Global filters - always visible */}
-        <div className="filters-row">
+        <div className={`filters-row ${!user ? 'filters-row-logout' : ''}`}>
           <div className="filters-actions">
             {user ? (
               <div className="mode-switch">
@@ -248,9 +248,6 @@ function AppContent() {
                     <option value="off">✕ Turn off</option>
                   </select>
                 )}
-                <button className="register-btn login-main-btn" onClick={() => setShowAuth(true)}>
-                  Login / Sign Up
-                </button>
               </>
             )}
             {user && (
@@ -287,6 +284,11 @@ function AppContent() {
             )}
           </div>
           <SearchBar onSearch={handleSearch} />
+          {!user && (
+            <button className="register-btn login-main-btn" onClick={() => setShowAuth(true)}>
+              Login / Sign Up
+            </button>
+          )}
         </div>
 
         {isProvider ? (

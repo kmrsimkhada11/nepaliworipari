@@ -3049,13 +3049,25 @@ body {
 
 /* Login button in main page */
 .login-main-btn {
-  margin-left: auto;
   background: var(--color-primary);
   border-color: var(--color-primary);
   color: white;
+  white-space: nowrap;
 }
 
 .login-main-btn:hover {
   background: var(--color-primary-dark);
   border-color: var(--color-primary-dark);
+}
+
+.filters-row-logout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filters-row-logout .search-wrapper {
+  flex: 1;
+  max-width: 500px;
+  margin: 0 1rem;
 }
