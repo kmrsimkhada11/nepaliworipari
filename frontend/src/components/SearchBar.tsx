@@ -34,7 +34,7 @@ export function SearchBar({ onSearch }: SearchBarProps) {
         <input
           type="text"
           className="search-input"
-          placeholder="Search services, businesses..."
+          placeholder="Search..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           aria-label="Search businesses"

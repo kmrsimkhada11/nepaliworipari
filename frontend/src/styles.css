@@ -185,6 +185,9 @@ body {
   color: var(--color-text);
   background: transparent;
   padding: 0.4rem 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .search-input::placeholder {
