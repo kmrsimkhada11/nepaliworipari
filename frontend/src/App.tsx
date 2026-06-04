@@ -180,7 +180,7 @@ function AppContent() {
   if (authLoading) {
     return (
       <div className="app">
-        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} mode={mode} onModeChange={setMode} />
+        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} />
         <main className="main-content">
           <CategoryGrid
             parentCategories={parentCategories}
@@ -197,7 +197,7 @@ function AppContent() {
 
   return (
     <div className="app">
-      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} mode={mode} onModeChange={setMode} />
+      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} />
       <main className="main-content">
         {/* Global filters - always visible */}
         <div className="filters-row">
@@ -230,10 +230,10 @@ function AppContent() {
                 <option value="off">✕ Turn off</option>
               </select>
             )}
-            <button className="register-btn post-needed-btn" onClick={() => setShowPostNeeded(true)}>
+            <button className="register-btn post-needed-btn" onClick={() => { setMode('seeker'); setShowPostNeeded(true); }}>
               🔍 Looking for
             </button>
-            <button className="register-btn" onClick={handleListBusinessClick}>
+            <button className="register-btn" onClick={() => { setMode('provider'); handleListBusinessClick(); }}>
               ➕ Listing
             </button>
           </div>
