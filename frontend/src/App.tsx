@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
 import { CategoryGrid } from './components/CategoryGrid';
@@ -11,6 +12,8 @@ import { Profile } from './components/Profile';
 import { PostServiceNeeded } from './components/PostServiceNeeded';
 import { ServiceWantedFeed } from './components/ServiceWantedFeed';
 import { MyRequests } from './components/MyRequests';
+import { BusinessPage } from './pages/BusinessPage';
+import { RequestPage } from './pages/RequestPage';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider, useNotifications } from './context/NotificationContext';
 import { fetchCategoryStats, fetchSubcategories, fetchBusinesses, fetchNearbyBusinesses, fetchMyBusinesses } from './api';
@@ -196,177 +199,187 @@ function AppContent() {
     );
   }
 
+  const HomePage = () => (
+    <main className="main-content">
+      {/* Global filters - always visible */}
+      <div className={`filters-row ${!user ? 'filters-row-logout' : ''}`}>
+        <div className="filters-actions">
+          {user ? (
+            <div className="mode-switch">
+              <button
+                className={`mode-switch-btn ${mode === 'seeker' ? 'active' : ''}`}
+                onClick={() => setMode('seeker')}
+              >
+                🔍 Looking for
+              </button>
+              <button
+                className={`mode-switch-btn ${mode === 'provider' ? 'active' : ''}`}
+                onClick={() => setMode('provider')}
+              >
+                ➕ Listing
+              </button>
+            </div>
+          ) : (
+            <>
+              {!locationEnabled ? (
+                <button
+                  className="register-btn location-btn"
+                  onClick={handleLocationToggle}
+                >
+                  📍 Near Me
+                </button>
+              ) : (
+                <select
+                  className="register-btn location-btn active radius-dropdown"
+                  value={radius}
+                  onChange={(e) => {
+                    if (e.target.value === 'off') {
+                      handleLocationToggle();
+                    } else {
+                      setRadius(parseInt(e.target.value));
+                      setCurrentPage(1);
+                    }
+                  }}
+                >
+                  <option value="5">📍 5 km ▾</option>
+                  <option value="10">📍 10 km ▾</option>
+                  <option value="25">📍 25 km ▾</option>
+                  <option value="50">📍 50 km ▾</option>
+                  <option value="100">📍 100 km ▾</option>
+                  <option value="off">✕ Turn off</option>
+                </select>
+              )}
+            </>
+          )}
+          {user && (
+            <>
+              {!locationEnabled ? (
+                <button
+                  className="register-btn location-btn"
+                  onClick={handleLocationToggle}
+                >
+                  📍 Near Me
+                </button>
+              ) : (
+                <select
+                  className="register-btn location-btn active radius-dropdown"
+                  value={radius}
+                  onChange={(e) => {
+                    if (e.target.value === 'off') {
+                      handleLocationToggle();
+                    } else {
+                      setRadius(parseInt(e.target.value));
+                      setCurrentPage(1);
+                    }
+                  }}
+                >
+                  <option value="5">📍 5 km ▾</option>
+                  <option value="10">📍 10 km ▾</option>
+                  <option value="25">📍 25 km ▾</option>
+                  <option value="50">📍 50 km ▾</option>
+                  <option value="100">📍 100 km ▾</option>
+                  <option value="off">✕ Turn off</option>
+                </select>
+              )}
+            </>
+          )}
+        </div>
+        <SearchBar onSearch={handleSearch} />
+        {!user && (
+          <button className="register-btn login-main-btn" onClick={() => setShowAuth(true)}>
+            Login / Sign Up
+          </button>
+        )}
+      </div>
+
+      {isProvider ? (
+        <>
+          {user && (
+            <div className="provider-dashboard-header">
+              <h2>My Listed Businesses</h2>
+              <button className="register-btn" onClick={handleListBusinessClick}>
+                + List Your Business
+              </button>
+            </div>
+          )}
+          {user && (
+            <BusinessList
+              businesses={businesses}
+              pagination={pagination}
+              loading={loading}
+              onPageChange={handlePageChange}
+            />
+          )}
+          <ServiceWantedFeed />
+        </>
+      ) : (
+        <>
+
+          {/* My Requests - shows user's posted requests */}
+          <MyRequests onPostClick={() => setShowPostNeeded(true)} />
+
+          {/* Breadcrumb navigation */}
+          {(selectedParent || selectedSubcategory) && (
+            <div className="breadcrumb">
+              <button className="breadcrumb-btn" onClick={() => { handleParentSelect(null); }}>
+                ← All Categories
+              </button>
+              {selectedParent && selectedSubcategory && (
+                <button className="breadcrumb-btn" onClick={() => handleSubcategorySelect(null)}>
+                  ← {parentCategories.find(c => c.slug === selectedParent)?.name || 'Back'}
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Step 1: Show parent categories */}
+          {!selectedParent && (
+            <CategoryGrid
+              parentCategories={parentCategories}
+              subcategories={[]}
+              selectedParent={null}
+              selectedSubcategory={null}
+              onParentSelect={handleParentSelect}
+              onSubcategorySelect={handleSubcategorySelect} onPostClick={() => setShowPostNeeded(true)}
+            />
+          )}
+
+          {/* Step 2: Show subcategories when parent is selected */}
+          {selectedParent && !selectedSubcategory && (
+            <CategoryGrid
+              parentCategories={parentCategories}
+              subcategories={subcategories}
+              selectedParent={selectedParent}
+              selectedSubcategory={null}
+              onParentSelect={handleParentSelect}
+              onSubcategorySelect={handleSubcategorySelect} onPostClick={() => setShowPostNeeded(true)}
+            />
+          )}
+
+          {/* Step 3: Show businesses when subcategory is selected or search is active */}
+          {(selectedSubcategory || searchQuery) && (
+            <BusinessList
+              businesses={businesses}
+              pagination={pagination}
+              loading={loading}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </>
+      )}
+    </main>
+  );
+
   return (
     <div className="app">
       <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} />
-      <main className="main-content">
-        {/* Global filters - always visible */}
-        <div className={`filters-row ${!user ? 'filters-row-logout' : ''}`}>
-          <div className="filters-actions">
-            {user ? (
-              <div className="mode-switch">
-                <button
-                  className={`mode-switch-btn ${mode === 'seeker' ? 'active' : ''}`}
-                  onClick={() => setMode('seeker')}
-                >
-                  🔍 Looking for
-                </button>
-                <button
-                  className={`mode-switch-btn ${mode === 'provider' ? 'active' : ''}`}
-                  onClick={() => setMode('provider')}
-                >
-                  ➕ Listing
-                </button>
-              </div>
-            ) : (
-              <>
-                {!locationEnabled ? (
-                  <button
-                    className="register-btn location-btn"
-                    onClick={handleLocationToggle}
-                  >
-                    📍 Near Me
-                  </button>
-                ) : (
-                  <select
-                    className="register-btn location-btn active radius-dropdown"
-                    value={radius}
-                    onChange={(e) => {
-                      if (e.target.value === 'off') {
-                        handleLocationToggle();
-                      } else {
-                        setRadius(parseInt(e.target.value));
-                        setCurrentPage(1);
-                      }
-                    }}
-                  >
-                    <option value="5">📍 5 km ▾</option>
-                    <option value="10">📍 10 km ▾</option>
-                    <option value="25">📍 25 km ▾</option>
-                    <option value="50">📍 50 km ▾</option>
-                    <option value="100">📍 100 km ▾</option>
-                    <option value="off">✕ Turn off</option>
-                  </select>
-                )}
-              </>
-            )}
-            {user && (
-              <>
-                {!locationEnabled ? (
-                  <button
-                    className="register-btn location-btn"
-                    onClick={handleLocationToggle}
-                  >
-                    📍 Near Me
-                  </button>
-                ) : (
-                  <select
-                    className="register-btn location-btn active radius-dropdown"
-                    value={radius}
-                    onChange={(e) => {
-                      if (e.target.value === 'off') {
-                        handleLocationToggle();
-                      } else {
-                        setRadius(parseInt(e.target.value));
-                        setCurrentPage(1);
-                      }
-                    }}
-                  >
-                    <option value="5">📍 5 km ▾</option>
-                    <option value="10">📍 10 km ▾</option>
-                    <option value="25">📍 25 km ▾</option>
-                    <option value="50">📍 50 km ▾</option>
-                    <option value="100">📍 100 km ▾</option>
-                    <option value="off">✕ Turn off</option>
-                  </select>
-                )}
-              </>
-            )}
-          </div>
-          <SearchBar onSearch={handleSearch} />
-          {!user && (
-            <button className="register-btn login-main-btn" onClick={() => setShowAuth(true)}>
-              Login / Sign Up
-            </button>
-          )}
-        </div>
 
-        {isProvider ? (
-          <>
-            {user && (
-              <div className="provider-dashboard-header">
-                <h2>My Listed Businesses</h2>
-                <button className="register-btn" onClick={handleListBusinessClick}>
-                  + List Your Business
-                </button>
-              </div>
-            )}
-            {user && (
-              <BusinessList
-                businesses={businesses}
-                pagination={pagination}
-                loading={loading}
-                onPageChange={handlePageChange}
-              />
-            )}
-            <ServiceWantedFeed />
-          </>
-        ) : (
-          <>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/business/:id" element={<BusinessPage />} />
+        <Route path="/request/:id" element={<RequestPage />} />
+      </Routes>
 
-            {/* My Requests - shows user's posted requests */}
-            <MyRequests onPostClick={() => setShowPostNeeded(true)} />
-
-            {/* Breadcrumb navigation */}
-            {(selectedParent || selectedSubcategory) && (
-              <div className="breadcrumb">
-                <button className="breadcrumb-btn" onClick={() => { handleParentSelect(null); }}>
-                  ← All Categories
-                </button>
-                {selectedParent && selectedSubcategory && (
-                  <button className="breadcrumb-btn" onClick={() => handleSubcategorySelect(null)}>
-                    ← {parentCategories.find(c => c.slug === selectedParent)?.name || 'Back'}
-                  </button>
-                )}
-              </div>
-            )}
-
-            {/* Step 1: Show parent categories */}
-            {!selectedParent && (
-              <CategoryGrid
-                parentCategories={parentCategories}
-                subcategories={[]}
-                selectedParent={null}
-                selectedSubcategory={null}
-                onParentSelect={handleParentSelect}
-                onSubcategorySelect={handleSubcategorySelect} onPostClick={() => setShowPostNeeded(true)}
-              />
-            )}
-
-            {/* Step 2: Show subcategories when parent is selected */}
-            {selectedParent && !selectedSubcategory && (
-              <CategoryGrid
-                parentCategories={parentCategories}
-                subcategories={subcategories}
-                selectedParent={selectedParent}
-                selectedSubcategory={null}
-                onParentSelect={handleParentSelect}
-                onSubcategorySelect={handleSubcategorySelect} onPostClick={() => setShowPostNeeded(true)}
-              />
-            )}
-
-            {/* Step 3: Show businesses when subcategory is selected or search is active */}
-            {(selectedSubcategory || searchQuery) && (
-              <BusinessList
-                businesses={businesses}
-                pagination={pagination}
-                loading={loading}
-                onPageChange={handlePageChange}
-              />
-            )}
-          </>
-        )}
-      </main>
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-brand">

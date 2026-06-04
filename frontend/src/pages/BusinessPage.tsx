@@ -1,101 +1,89 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Business } from '../types';
-import { ReviewSection } from './ReviewSection';
-import { ChatModal } from './ChatModal';
-import { EditBusiness } from './EditBusiness';
-import { useAuth } from '../context/AuthContext';
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { API_BASE } from '../config';
+import { useAuth } from '../context/AuthContext';
+import { Business } from '../types';
+import { ChatModal } from '../components/ChatModal';
+import { ReviewSection } from '../components/ReviewSection';
 
-interface BusinessCardProps {
-  business: Business;
-}
-
-export function BusinessCard({ business }: BusinessCardProps) {
-  const { user, token } = useAuth();
-  const [showReviews, setShowReviews] = useState(false);
+export function BusinessPage() {
+  const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
+  const [business, setBusiness] = useState<Business | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [showChat, setShowChat] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [requesting, setRequesting] = useState(false);
-  const [requestStatus, setRequestStatus] = useState<string | null>(null);
+  const [showReviews, setShowReviews] = useState(false);
+
+  useEffect(() => {
+    if (id) {
+      loadBusiness();
+    }
+  }, [id]);
+
+  const loadBusiness = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/businesses/${id}`);
+      if (!res.ok) {
+        setError('Business not found');
+        return;
+      }
+      const data = await res.json();
+      setBusiness(data.business || data);
+    } catch {
+      setError('Failed to load business');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="page-container">
+        <p>Loading business...</p>
+      </div>
+    );
+  }
+
+  if (error || !business) {
+    return (
+      <div className="page-container">
+        <p>{error || 'Business not found'}</p>
+        <Link to="/" className="breadcrumb-btn">← Back to Home</Link>
+      </div>
+    );
+  }
 
   const isSeeker = user?.role === 'seeker';
-  const isOwner = user?.id === business.user_id;
   const canChat = isSeeker && business.user_id && business.user_id !== user?.id;
 
-  const handleDeleteBusiness = async () => {
-    if (!confirm('Are you sure you want to delete this business?')) return;
-    try {
-      const res = await fetch(`${API_BASE}/register/${business.id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (res.ok) {
-        window.location.reload();
-      }
-    } catch {
-      console.error('Failed to delete');
-    }
-  };
-
-  const handleRequestService = async () => {
-    if (!token) return;
-    setRequesting(true);
-    try {
-      const res = await fetch(`${API_BASE}/service-requests/${business.id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ note: '' }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setRequestStatus('pending');
-      } else {
-        setRequestStatus(data.error?.includes('already') ? 'already' : 'error');
-      }
-    } catch {
-      setRequestStatus('error');
-    } finally {
-      setRequesting(false);
-    }
-  };
-
   return (
-    <>
-      <article className="business-card">
-        {isOwner && (
-          <div className="owner-actions-top">
-            <button className="edit-btn edit-btn-top" onClick={() => setShowEdit(true)}>
-              ✏️
-            </button>
-            <button className="delete-btn-top" onClick={handleDeleteBusiness}>
-              ✕
-            </button>
-          </div>
-        )}
+    <div className="page-container">
+      <Link to="/" className="breadcrumb-btn">← Back to Home</Link>
+
+      <article className="business-detail">
         <div className="business-card-header">
           <span className="business-category-icon">{business.category_icon}</span>
           <div className="business-card-meta">
             <span className="business-category-tag">{business.category_name}</span>
-            <span className="business-location">
-              📍 {business.city}, {business.state}
-              {business.distance_km !== undefined && (
-                <span className="business-distance"> • {business.distance_km.toFixed(1)} km away</span>
-              )}
-            </span>
+            {business.parent_category_name && (
+              <span className="business-category-tag">{business.parent_category_name}</span>
+            )}
           </div>
         </div>
-        <h3 className="business-name">
-          <Link to={`/business/${business.id}`} className="business-name-link">
-            {business.name}
-          </Link>
-        </h3>
+
+        <h1 className="business-name">{business.name}</h1>
+
+        <p className="business-location">
+          📍 {business.city}, {business.state}
+          {business.address && ` • ${business.address}`}
+        </p>
+
         {business.description && (
           <p className="business-description">{business.description}</p>
         )}
+
         <div className="business-contact">
           {business.phone && (
             <a href={`tel:${business.phone}`} className="business-social phone" aria-label={`Call ${business.name}`}>
@@ -128,39 +116,26 @@ export function BusinessCard({ business }: BusinessCardProps) {
             </a>
           )}
         </div>
-        <div className="business-card-footer">
-          <div className="business-card-actions">
-            <button className="review-btn" onClick={() => setShowReviews(true)}>
-              ⭐ Reviews
+
+        <div className="business-card-actions" style={{ marginTop: '1rem' }}>
+          <button className="review-btn" onClick={() => setShowReviews(true)}>
+            ⭐ Reviews
+          </button>
+          {canChat && (
+            <button className="chat-btn" onClick={() => setShowChat(true)}>
+              💬 Chat with Provider
             </button>
-            {canChat && (
-              <button className="chat-btn" onClick={() => setShowChat(true)}>
-                💬 Chat
-              </button>
-            )}
-            {isSeeker && business.user_id && (
-              <button
-                className="request-service-btn"
-                onClick={handleRequestService}
-                disabled={requesting || requestStatus === 'pending' || requestStatus === 'already'}
-              >
-                {requestStatus === 'pending' || requestStatus === 'already'
-                  ? '✓ Requested'
-                  : requesting
-                  ? 'Requesting...'
-                  : '📋 Request Service'}
-              </button>
-            )}
-          </div>
-          {business.is_featured && <span className="featured-badge">⭐ Featured</span>}
+          )}
         </div>
       </article>
+
       <ReviewSection
         businessId={business.id}
         businessName={business.name}
         show={showReviews}
         onClose={() => setShowReviews(false)}
       />
+
       {canChat && (
         <ChatModal
           show={showChat}
@@ -170,14 +145,6 @@ export function BusinessCard({ business }: BusinessCardProps) {
           providerId={business.user_id!}
         />
       )}
-      {isOwner && (
-        <EditBusiness
-          business={business}
-          show={showEdit}
-          onClose={() => setShowEdit(false)}
-          onSuccess={() => window.location.reload()}
-        />
-      )}
-    </>
+    </div>
   );
 }

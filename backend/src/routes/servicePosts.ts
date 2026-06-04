@@ -103,6 +103,33 @@ router.get('/my-posts', authenticate, async (req: AuthRequest, res: Response) =>
   }
 });
 
+// GET /api/service-posts/:id - Get a single service post by ID
+router.get('/:id', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query(
+      `SELECT sp.*, u.name as seeker_name, u.city as seeker_city, u.state as seeker_state,
+              c.name as category_name, c.icon as category_icon,
+              pc.name as parent_category_name
+       FROM service_posts sp
+       JOIN users u ON sp.seeker_id = u.id
+       LEFT JOIN categories c ON sp.category_id = c.id
+       LEFT JOIN categories pc ON c.parent_id = pc.id
+       WHERE sp.id = $1`,
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    res.json({ post: result.rows[0] });
+  } catch (error) {
+    console.error('Error fetching service post:', error);
+    res.status(500).json({ error: 'Failed to fetch service post' });
+  }
+});
+
 // PATCH /api/service-posts/:id/close - Seeker closes their post
 router.patch('/:id/close', authenticate, async (req: AuthRequest, res: Response) => {
   try {

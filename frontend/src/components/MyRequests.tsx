@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE } from '../config';
 
@@ -21,6 +22,7 @@ interface MyPost {
 
 export function MyRequests({ onPostClick }: MyRequestsProps) {
   const { user, token } = useAuth();
+  const navigate = useNavigate();
   const [posts, setPosts] = useState<MyPost[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -116,7 +118,7 @@ export function MyRequests({ onPostClick }: MyRequestsProps) {
                 <div className="business-card-actions">
                   <span className={`status-badge status-${post.status}`}>{post.status === 'open' ? 'Active' : post.status}</span>
                   <span className="review-btn">{new Date(post.created_at).toLocaleDateString()}</span>
-                  <button className="chat-btn" onClick={() => {}}>
+                  <button className="chat-btn" onClick={() => navigate(`/request/${post.id}`)}>
                     💬 Messages
                   </button>
                 </div>
