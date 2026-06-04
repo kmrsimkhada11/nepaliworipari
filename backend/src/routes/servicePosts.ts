@@ -11,9 +11,6 @@ router.post('/', authenticate, async (req: AuthRequest, res: Response) => {
     const seekerId = req.user!.userId;
     const role = req.user!.role;
 
-    if (role !== 'seeker') {
-      return res.status(403).json({ error: 'Only service seekers can post service requests' });
-    }
 
     if (!title || !state) {
       return res.status(400).json({ error: 'Title and state are required' });

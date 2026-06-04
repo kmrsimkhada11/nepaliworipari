@@ -85,26 +85,6 @@ export function AuthModal({ show, onClose }: AuthModalProps) {
           {!isLogin && (
             <>
               <div className="form-group">
-                <label>I am a</label>
-                <div className="role-selector">
-                  <button
-                    type="button"
-                    className={`role-btn ${role === 'seeker' ? 'active' : ''}`}
-                    onClick={() => setRole('seeker')}
-                  >
-                    🔍 Looking for Services
-                  </button>
-                  <button
-                    type="button"
-                    className={`role-btn ${role === 'provider' ? 'active' : ''}`}
-                    onClick={() => setRole('provider')}
-                  >
-                    🏪 Service Provider
-                  </button>
-                </div>
-              </div>
-
-              <div className="form-group">
                 <label htmlFor="auth-name">Full Name</label>
                 <input
                   id="auth-name"

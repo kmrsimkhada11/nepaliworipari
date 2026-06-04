@@ -12,9 +12,6 @@ router.post('/:businessId', authenticate, async (req: AuthRequest, res: Response
     const seekerId = req.user!.userId;
     const role = req.user!.role;
 
-    if (role !== 'seeker') {
-      return res.status(403).json({ error: 'Only service seekers can request services' });
-    }
 
     // Check if business exists
     const business = await pool.query('SELECT id, user_id FROM businesses WHERE id = $1', [businessId]);

@@ -40,8 +40,10 @@ function AppContent() {
   const [showRequests, setShowRequests] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showPostNeeded, setShowPostNeeded] = useState(false);
+  const [mode, setMode] = useState<'seeker' | 'provider'>('seeker');
 
-  const isProvider = user?.role === 'provider';
+  const isProvider = mode === 'provider';
+  const isSeeker = mode === 'seeker';
 
   // Fetch parent categories with business counts
   const loadParentCategories = useCallback(async () => {
@@ -179,7 +181,7 @@ function AppContent() {
   if (authLoading) {
     return (
       <div className="app">
-        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} />
+        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} mode={mode} onModeChange={setMode} />
         <main className="main-content">
           <CategoryGrid
             parentCategories={parentCategories}
@@ -196,7 +198,7 @@ function AppContent() {
 
   return (
     <div className="app">
-      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} />
+      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} mode={mode} onModeChange={setMode} />
       <main className="main-content">
         {isProvider && user ? (
           <>
@@ -217,7 +219,7 @@ function AppContent() {
         ) : (
           <>
             <div className="filters-row">
-              {user?.role === 'seeker' && (
+              {isSeeker && (
                 <button className="register-btn post-needed-btn" onClick={() => setShowPostNeeded(true)}>
                   🔍 Post What You Need
                 </button>

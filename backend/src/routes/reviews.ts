@@ -45,9 +45,6 @@ router.post('/:businessId', authenticate, async (req: AuthRequest, res: Response
     const userRole = req.user!.role;
 
     // Only seekers can leave reviews
-    if (userRole !== 'seeker') {
-      return res.status(403).json({ error: 'Only service seekers can leave reviews' });
-    }
 
     if (!rating || rating < 1 || rating > 5) {
       return res.status(400).json({ error: 'Rating must be between 1 and 5' });

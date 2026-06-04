@@ -29,10 +29,10 @@ export function authenticate(req: AuthRequest, res: Response, next: NextFunction
   }
 }
 
-// Ensure user is a service provider
+// Ensure user is a service provider (now allows any authenticated user)
 export function requireProvider(req: AuthRequest, res: Response, next: NextFunction) {
-  if (!req.user || req.user.role !== 'provider') {
-    return res.status(403).json({ error: 'Only service providers can perform this action.' });
+  if (!req.user) {
+    return res.status(401).json({ error: 'Authentication required.' });
   }
   next();
 }

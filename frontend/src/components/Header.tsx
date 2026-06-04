@@ -12,9 +12,11 @@ interface HeaderProps {
   onProfileClick: () => void;
   onListBusinessClick: () => void;
   onFindNearMe: () => void;
+  mode: 'seeker' | 'provider';
+  onModeChange: (mode: 'seeker' | 'provider') => void;
 }
 
-export function Header({ selectedState, onStateChange, onLoginClick, onMessagesClick, onRequestsClick, onProfileClick, onListBusinessClick, onFindNearMe }: HeaderProps) {
+export function Header({ selectedState, onStateChange, onLoginClick, onMessagesClick, onRequestsClick, onProfileClick, onListBusinessClick, onFindNearMe, mode, onModeChange }: HeaderProps) {
   const { user, logout } = useAuth();
   const { unreadMessages, pendingRequests } = useNotifications();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -62,6 +64,26 @@ export function Header({ selectedState, onStateChange, onLoginClick, onMessagesC
             <div className="side-menu-user">
               <div className="side-menu-avatar">{user.name.charAt(0).toUpperCase()}</div>
               <span className="side-menu-username">{user.name}</span>
+            </div>
+          )}
+
+          {user && (
+            <div className="side-menu-section">
+              <label className="side-menu-label">Mode</label>
+              <div className="mode-toggle">
+                <button
+                  className={`mode-btn ${mode === 'seeker' ? 'active' : ''}`}
+                  onClick={() => { onModeChange('seeker'); setMenuOpen(false); }}
+                >
+                  🔍 Seeker
+                </button>
+                <button
+                  className={`mode-btn ${mode === 'provider' ? 'active' : ''}`}
+                  onClick={() => { onModeChange('provider'); setMenuOpen(false); }}
+                >
+                  🏪 Provider
+                </button>
+              </div>
             </div>
           )}
 
