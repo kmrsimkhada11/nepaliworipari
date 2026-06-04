@@ -3149,3 +3149,16 @@ body {
     padding: 1.25rem;
   }
 }
+
+
+/* Clickable request link */
+.request-link {
+  cursor: pointer;
+  color: var(--color-secondary);
+  transition: color 0.2s;
+}
+
+.request-link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}

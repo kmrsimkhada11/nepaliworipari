@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE } from '../config';
 
@@ -22,6 +23,7 @@ interface ServiceRequestsProps {
 
 export function ServiceRequests({ show, onClose }: ServiceRequestsProps) {
   const { token, user } = useAuth();
+  const navigate = useNavigate();
   const [requests, setRequests] = useState<ServiceRequest[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -96,7 +98,7 @@ export function ServiceRequests({ show, onClose }: ServiceRequestsProps) {
             requests.map((req) => (
               <div key={req.id} className="request-item">
                 <div className="request-item-header">
-                  <strong>{req.business_name}</strong>
+                  <strong className="request-link" onClick={() => { navigate(`/business/${req.business_id}`); onClose(); }}>{req.business_name}</strong>
                   {getStatusBadge(req.status)}
                 </div>
                 {isProvider && (

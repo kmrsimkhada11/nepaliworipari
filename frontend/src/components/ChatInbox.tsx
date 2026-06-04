@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ChatModal } from './ChatModal';
 import { API_BASE } from '../config';
@@ -23,6 +24,7 @@ interface ChatInboxProps {
 
 export function ChatInbox({ show, onClose }: ChatInboxProps) {
   const { token, user } = useAuth();
+  const navigate = useNavigate();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [loading, setLoading] = useState(false);
   const [activeChat, setActiveChat] = useState<Conversation | null>(null);
@@ -153,7 +155,7 @@ export function ChatInbox({ show, onClose }: ChatInboxProps) {
                   // Accepted - can open chat
                   <button
                     className="inbox-item"
-                    onClick={() => setActiveChat(conv)}
+                    onClick={() => { navigate(`/business/${conv.business_id}`); onClose(); }}
                   >
                     <div className="inbox-item-info">
                       <strong>{conv.other_user_name}</strong>
