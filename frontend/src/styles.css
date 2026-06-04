@@ -3162,3 +3162,37 @@ body {
   color: var(--color-primary);
   text-decoration: underline;
 }
+
+
+/* Chat footer with view button */
+.chat-footer {
+  border-top: 1px solid var(--color-border);
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chat-view-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  padding: 0.4rem 0.6rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  color: var(--color-text-light);
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.chat-view-btn:hover {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+.chat-footer .chat-input-form {
+  flex: 1;
+  border-top: none;
+  padding: 0;
+}

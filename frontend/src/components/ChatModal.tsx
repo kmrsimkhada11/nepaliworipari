@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE } from '../config';
 
@@ -21,6 +22,7 @@ interface ChatModalProps {
 
 export function ChatModal({ show, onClose, businessId, businessName, providerId }: ChatModalProps) {
   const { user, token } = useAuth();
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -132,7 +134,15 @@ export function ChatModal({ show, onClose, businessId, businessName, providerId 
           <div ref={messagesEndRef} />
         </div>
 
-        <form onSubmit={handleSend} className="chat-input-form">
+        <div className="chat-footer">
+          <button
+            type="button"
+            className="chat-view-btn"
+            onClick={() => { navigate(`/business/${businessId}`); onClose(); }}
+          >
+            👁️ View
+          </button>
+          <form onSubmit={handleSend} className="chat-input-form">
           <input
             type="text"
             value={newMessage}
@@ -145,6 +155,7 @@ export function ChatModal({ show, onClose, businessId, businessName, providerId 
             Send
           </button>
         </form>
+        </div>
       </div>
     </div>
   );
