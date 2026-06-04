@@ -3040,3 +3040,17 @@ body {
   border-color: #dc2626;
   background: #fef2f2;
 }
+
+
+/* Login button in main page */
+.login-main-btn {
+  margin-left: auto;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.login-main-btn:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+}

@@ -203,47 +203,87 @@ function AppContent() {
         {/* Global filters - always visible */}
         <div className="filters-row">
           <div className="filters-actions">
-            <div className="mode-switch">
-              <button
-                className={`mode-switch-btn ${mode === 'seeker' ? 'active' : ''}`}
-                onClick={() => setMode('seeker')}
-              >
-                🔍 Looking for
-              </button>
-              <button
-                className={`mode-switch-btn ${mode === 'provider' ? 'active' : ''}`}
-                onClick={() => setMode('provider')}
-              >
-                ➕ Listing
-              </button>
-            </div>
-            {!locationEnabled ? (
-              <button
-                className="register-btn location-btn"
-                onClick={handleLocationToggle}
-              >
-                📍 Near Me
-              </button>
+            {user ? (
+              <div className="mode-switch">
+                <button
+                  className={`mode-switch-btn ${mode === 'seeker' ? 'active' : ''}`}
+                  onClick={() => setMode('seeker')}
+                >
+                  🔍 Looking for
+                </button>
+                <button
+                  className={`mode-switch-btn ${mode === 'provider' ? 'active' : ''}`}
+                  onClick={() => setMode('provider')}
+                >
+                  ➕ Listing
+                </button>
+              </div>
             ) : (
-              <select
-                className="register-btn location-btn active radius-dropdown"
-                value={radius}
-                onChange={(e) => {
-                  if (e.target.value === 'off') {
-                    handleLocationToggle();
-                  } else {
-                    setRadius(parseInt(e.target.value));
-                    setCurrentPage(1);
-                  }
-                }}
-              >
-                <option value="5">📍 5 km</option>
-                <option value="10">📍 10 km</option>
-                <option value="25">📍 25 km</option>
-                <option value="50">📍 50 km</option>
-                <option value="100">📍 100 km</option>
-                <option value="off">✕ Turn off</option>
-              </select>
+              <>
+                {!locationEnabled ? (
+                  <button
+                    className="register-btn location-btn"
+                    onClick={handleLocationToggle}
+                  >
+                    📍 Near Me
+                  </button>
+                ) : (
+                  <select
+                    className="register-btn location-btn active radius-dropdown"
+                    value={radius}
+                    onChange={(e) => {
+                      if (e.target.value === 'off') {
+                        handleLocationToggle();
+                      } else {
+                        setRadius(parseInt(e.target.value));
+                        setCurrentPage(1);
+                      }
+                    }}
+                  >
+                    <option value="5">📍 5 km</option>
+                    <option value="10">📍 10 km</option>
+                    <option value="25">📍 25 km</option>
+                    <option value="50">📍 50 km</option>
+                    <option value="100">📍 100 km</option>
+                    <option value="off">✕ Turn off</option>
+                  </select>
+                )}
+                <button className="register-btn login-main-btn" onClick={() => setShowAuth(true)}>
+                  Login / Sign Up
+                </button>
+              </>
+            )}
+            {user && (
+              <>
+                {!locationEnabled ? (
+                  <button
+                    className="register-btn location-btn"
+                    onClick={handleLocationToggle}
+                  >
+                    📍 Near Me
+                  </button>
+                ) : (
+                  <select
+                    className="register-btn location-btn active radius-dropdown"
+                    value={radius}
+                    onChange={(e) => {
+                      if (e.target.value === 'off') {
+                        handleLocationToggle();
+                      } else {
+                        setRadius(parseInt(e.target.value));
+                        setCurrentPage(1);
+                      }
+                    }}
+                  >
+                    <option value="5">📍 5 km</option>
+                    <option value="10">📍 10 km</option>
+                    <option value="25">📍 25 km</option>
+                    <option value="50">📍 50 km</option>
+                    <option value="100">📍 100 km</option>
+                    <option value="off">✕ Turn off</option>
+                  </select>
+                )}
+              </>
             )}
           </div>
           <SearchBar onSearch={handleSearch} />
