@@ -22,6 +22,21 @@ export function BusinessCard({ business }: BusinessCardProps) {
   const isOwner = user?.id === business.user_id;
   const canChat = isSeeker && business.user_id && business.user_id !== user?.id;
 
+  const handleDeleteBusiness = async () => {
+    if (!confirm('Are you sure you want to delete this business?')) return;
+    try {
+      const res = await fetch(`${API_BASE}/register/${business.id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        window.location.reload();
+      }
+    } catch {
+      console.error('Failed to delete');
+    }
+  };
+
   const handleRequestService = async () => {
     if (!token) return;
     setRequesting(true);
@@ -51,9 +66,14 @@ export function BusinessCard({ business }: BusinessCardProps) {
     <>
       <article className="business-card">
         {isOwner && (
-          <button className="edit-btn edit-btn-top" onClick={() => setShowEdit(true)}>
-            ✏️
-          </button>
+          <div className="owner-actions-top">
+            <button className="edit-btn edit-btn-top" onClick={() => setShowEdit(true)}>
+              ✏️
+            </button>
+            <button className="delete-btn delete-btn-top" onClick={handleDeleteBusiness}>
+              🗑️
+            </button>
+          </div>
         )}
         <div className="business-card-header">
           <span className="business-category-icon">{business.category_icon}</span>

@@ -125,4 +125,26 @@ router.patch('/:id/close', authenticate, async (req: AuthRequest, res: Response)
   }
 });
 
+// DELETE /api/service-posts/:id - Delete a post
+router.delete('/:id', authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const seekerId = req.user!.userId;
+
+    const result = await pool.query(
+      'DELETE FROM service_posts WHERE id = $1 AND seeker_id = $2 RETURNING id',
+      [id, seekerId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Post not found or not authorized' });
+    }
+
+    res.json({ message: 'Post deleted' });
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    res.status(500).json({ error: 'Failed to delete post' });
+  }
+});
+
 export default router;

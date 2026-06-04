@@ -61,6 +61,21 @@ export function MyRequests({ onPostClick }: MyRequestsProps) {
     }
   };
 
+  const handleDelete = async (postId: number) => {
+    if (!confirm('Are you sure you want to delete this request?')) return;
+    try {
+      const res = await fetch(`${API_BASE}/service-posts/${postId}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        loadMyPosts();
+      }
+    } catch {
+      console.error('Failed to delete post');
+    }
+  };
+
   if (!user) return null;
 
   return (
@@ -97,11 +112,16 @@ export function MyRequests({ onPostClick }: MyRequestsProps) {
                     💬 Messages
                   </button>
                 </div>
-                {post.status === 'open' && (
-                  <button className="request-service-btn" onClick={() => handleClose(post.id)}>
-                    ✕ Close
+                <div className="business-card-actions">
+                  {post.status === 'open' && (
+                    <button className="request-service-btn" onClick={() => handleClose(post.id)}>
+                      ✕ Close
+                    </button>
+                  )}
+                  <button className="delete-btn" onClick={() => handleDelete(post.id)}>
+                    🗑️
                   </button>
-                )}
+                </div>
               </div>
             </article>
           ))

@@ -2994,3 +2994,49 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Owner actions (edit + delete) top right */
+.owner-actions-top {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.35rem;
+  z-index: 1;
+}
+
+.delete-btn-top {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.delete-btn-top:hover {
+  border-color: #dc2626;
+  background: #fef2f2;
+}
+
+.delete-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  padding: 0.3rem 0.6rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.delete-btn:hover {
+  border-color: #dc2626;
+  background: #fef2f2;
+}
