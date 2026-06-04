@@ -230,12 +230,20 @@ function AppContent() {
                 <option value="off">✕ Turn off</option>
               </select>
             )}
-            <button className="register-btn post-needed-btn" onClick={() => { setMode('seeker'); setShowPostNeeded(true); }}>
-              🔍 Looking for
-            </button>
-            <button className="register-btn" onClick={() => { setMode('provider'); handleListBusinessClick(); }}>
-              ➕ Listing
-            </button>
+            <div className="mode-switch">
+              <button
+                className={`mode-switch-btn ${mode === 'seeker' ? 'active' : ''}`}
+                onClick={() => setMode('seeker')}
+              >
+                🔍 Looking for
+              </button>
+              <button
+                className={`mode-switch-btn ${mode === 'provider' ? 'active' : ''}`}
+                onClick={() => setMode('provider')}
+              >
+                ➕ Listing
+              </button>
+            </div>
           </div>
           <SearchBar onSearch={handleSearch} />
         </div>

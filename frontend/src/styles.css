@@ -2839,3 +2839,31 @@ body {
   background: white;
   color: var(--color-text);
 }
+
+
+/* Mode Switch */
+.mode-switch {
+  display: flex;
+  background: var(--color-border);
+  border-radius: 50px;
+  padding: 3px;
+}
+
+.mode-switch-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+  color: var(--color-text-light);
+  white-space: nowrap;
+}
+
+.mode-switch-btn.active {
+  background: var(--color-white);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
+}
