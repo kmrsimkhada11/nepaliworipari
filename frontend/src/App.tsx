@@ -249,20 +249,24 @@ function AppContent() {
           <SearchBar onSearch={handleSearch} />
         </div>
 
-        {isProvider && user ? (
+        {isProvider ? (
           <>
-            <div className="provider-dashboard-header">
-              <h2>My Listed Businesses</h2>
-              <button className="register-btn" onClick={handleListBusinessClick}>
-                + List Your Business
-              </button>
-            </div>
-            <BusinessList
-              businesses={businesses}
-              pagination={pagination}
-              loading={loading}
-              onPageChange={handlePageChange}
-            />
+            {user && (
+              <div className="provider-dashboard-header">
+                <h2>My Listed Businesses</h2>
+                <button className="register-btn" onClick={handleListBusinessClick}>
+                  + List Your Business
+                </button>
+              </div>
+            )}
+            {user && (
+              <BusinessList
+                businesses={businesses}
+                pagination={pagination}
+                loading={loading}
+                onPageChange={handlePageChange}
+              />
+            )}
             <ServiceWantedFeed />
           </>
         ) : (
