@@ -10,6 +10,7 @@ import { ServiceRequests } from './components/ServiceRequests';
 import { Profile } from './components/Profile';
 import { PostServiceNeeded } from './components/PostServiceNeeded';
 import { ServiceWantedFeed } from './components/ServiceWantedFeed';
+import { MyRequests } from './components/MyRequests';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider, useNotifications } from './context/NotificationContext';
 import { fetchCategoryStats, fetchSubcategories, fetchBusinesses, fetchNearbyBusinesses, fetchMyBusinesses } from './api';
@@ -314,6 +315,9 @@ function AppContent() {
                 onPageChange={handlePageChange}
               />
             )}
+
+            {/* My Requests - shows user's posted requests */}
+            <MyRequests />
           </>
         )}
       </main>
