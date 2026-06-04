@@ -114,7 +114,7 @@ export function MyRequests({ onPostClick }: MyRequestsProps) {
               {post.budget && <p className="business-description">💰 Budget: {post.budget}</p>}
               <div className="business-card-footer">
                 <div className="business-card-actions">
-                  <span className={`status-badge status-${post.status}`}>{post.status}</span>
+                  <span className={`status-badge status-${post.status}`}>{post.status === 'open' ? 'Active' : post.status}</span>
                   <span className="review-btn">{new Date(post.created_at).toLocaleDateString()}</span>
                   <button className="chat-btn" onClick={() => {}}>
                     💬 Messages
