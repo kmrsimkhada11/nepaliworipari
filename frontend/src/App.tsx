@@ -202,12 +202,6 @@ function AppContent() {
         {/* Global filters - always visible */}
         <div className="filters-row">
           <div className="filters-actions">
-            <button className="register-btn post-needed-btn" onClick={() => setShowPostNeeded(true)}>
-              🔍 Looking for
-            </button>
-            <button className="register-btn" onClick={handleListBusinessClick}>
-              ➕ Listing
-            </button>
             <button
               className={`register-btn location-btn ${locationEnabled ? 'active' : ''}`}
               onClick={handleLocationToggle}
@@ -227,6 +221,12 @@ function AppContent() {
                 <option value="100">100 km</option>
               </select>
             )}
+            <button className="register-btn post-needed-btn" onClick={() => setShowPostNeeded(true)}>
+              🔍 Looking for
+            </button>
+            <button className="register-btn" onClick={handleListBusinessClick}>
+              ➕ Listing
+            </button>
           </div>
           <SearchBar onSearch={handleSearch} />
         </div>
