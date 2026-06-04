@@ -1816,6 +1816,8 @@ body {
 .business-card-actions {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .chat-btn {
@@ -2011,6 +2013,9 @@ body {
   padding: 0.2rem 0.6rem;
   border-radius: 50px;
   text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.4;
 }
 
 .status-pending { background: #fef3c7; color: #92400e; }
