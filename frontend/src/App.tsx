@@ -202,12 +202,26 @@ function AppContent() {
         {/* Global filters - always visible */}
         <div className="filters-row">
           <div className="filters-actions">
+            <div className="mode-switch">
+              <button
+                className={`mode-switch-btn ${mode === 'seeker' ? 'active' : ''}`}
+                onClick={() => setMode('seeker')}
+              >
+                🔍 Looking for
+              </button>
+              <button
+                className={`mode-switch-btn ${mode === 'provider' ? 'active' : ''}`}
+                onClick={() => setMode('provider')}
+              >
+                ➕ Listing
+              </button>
+            </div>
             {!locationEnabled ? (
               <button
                 className="register-btn location-btn"
                 onClick={handleLocationToggle}
               >
-                📍 Find Near Me
+                📍 Near Me
               </button>
             ) : (
               <select
@@ -230,20 +244,6 @@ function AppContent() {
                 <option value="off">✕ Turn off</option>
               </select>
             )}
-            <div className="mode-switch">
-              <button
-                className={`mode-switch-btn ${mode === 'seeker' ? 'active' : ''}`}
-                onClick={() => setMode('seeker')}
-              >
-                🔍 Looking for
-              </button>
-              <button
-                className={`mode-switch-btn ${mode === 'provider' ? 'active' : ''}`}
-                onClick={() => setMode('provider')}
-              >
-                ➕ Listing
-              </button>
-            </div>
           </div>
           <SearchBar onSearch={handleSearch} />
         </div>
