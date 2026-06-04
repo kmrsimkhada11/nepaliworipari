@@ -3071,3 +3071,33 @@ body {
   max-width: 500px;
   margin: 0 1rem;
 }
+
+
+@media (max-width: 768px) {
+  .filters-row-logout {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .filters-row-logout .filters-actions {
+    flex-shrink: 0;
+  }
+
+  .filters-row-logout .search-wrapper {
+    flex: 1;
+    margin: 0 0.25rem;
+  }
+
+  .filters-row-logout .login-main-btn {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .filters-row-logout .register-btn {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+  }
+}
