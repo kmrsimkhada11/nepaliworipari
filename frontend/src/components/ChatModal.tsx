@@ -108,7 +108,7 @@ export function ChatModal({ show, onClose, businessId, businessName, providerId 
         <div className="chat-header">
           <div>
             <h3>💬 {businessName}</h3>
-            <span className="chat-subtitle">Chat with provider</span>
+            <span className="chat-subtitle">Chat</span>
           </div>
           <div className="chat-header-actions">
             <button
