@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AustralianState, AUSTRALIAN_STATES } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { useNotifications } from '../context/NotificationContext';
@@ -24,9 +25,9 @@ export function Header({ selectedState, onStateChange, onLoginClick, onMessagesC
       <header className="header">
         <div className="header-content">
           <div className="header-brand">
-            <div className="header-logo">
+            <Link to="/" className="header-logo">
               <img src="/logo.svg" alt="NepaliOriPari" className="logo-img" />
-            </div>
+            </Link>
           </div>
           <div className="header-controls">
             {user && (
