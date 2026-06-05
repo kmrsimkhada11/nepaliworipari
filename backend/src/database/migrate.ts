@@ -196,6 +196,14 @@ const migrate = async () => {
       CREATE INDEX IF NOT EXISTS idx_service_posts_category ON service_posts(category_id);
     `);
 
+    // Add reply_to_id column for message replies
+    await client.query(`
+      DO $$ BEGIN
+        ALTER TABLE messages ADD COLUMN IF NOT EXISTS reply_to_id INTEGER;
+      EXCEPTION WHEN duplicate_column THEN NULL;
+      END $$;
+    `);
+
     // Add social media columns if they don't exist
     await client.query(`
       DO $$ BEGIN

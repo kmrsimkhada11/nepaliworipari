@@ -3331,3 +3331,98 @@ body {
   display: inline-block;
   height: 1.2rem;
 }
+
+
+/* Chat reply and emoji */
+.chat-reply-preview {
+  background: rgba(0, 0, 0, 0.05);
+  border-left: 3px solid var(--color-primary);
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 0.3rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+}
+
+.chat-bubble.sent .chat-reply-preview {
+  background: rgba(255, 255, 255, 0.15);
+  border-left-color: rgba(255, 255, 255, 0.6);
+}
+
+.chat-reply-name {
+  display: block;
+  font-weight: 600;
+  font-size: 0.65rem;
+  opacity: 0.8;
+}
+
+.chat-reply-text {
+  opacity: 0.8;
+}
+
+.chat-bubble-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-reply-btn {
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+  padding: 0;
+  margin-left: 0.5rem;
+}
+
+.chat-bubble:hover .chat-reply-btn {
+  opacity: 0.6;
+}
+
+.chat-reply-btn:hover {
+  opacity: 1 !important;
+}
+
+.chat-reply-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: var(--color-accent);
+  border-top: 1px solid var(--color-border);
+  font-size: 0.8rem;
+}
+
+.chat-reply-info {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.chat-reply-cancel {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--color-text-light);
+  padding: 0 0.25rem;
+}
+
+.emoji-picker-container {
+  border-top: 1px solid var(--color-border);
+}
+
+.emoji-toggle-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  flex-shrink: 0;
+}
+
+.emoji-toggle-btn:hover {
+  transform: scale(1.1);
+}

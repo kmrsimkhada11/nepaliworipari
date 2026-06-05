@@ -86,10 +86,13 @@ router.get('/:conversationId', authenticate, async (req: AuthRequest, res: Respo
     );
 
     const result = await pool.query(
-      `SELECT m.id, m.sender_id, m.receiver_id, m.content, m.is_read, m.created_at,
-              u.name as sender_name
+      `SELECT m.id, m.sender_id, m.receiver_id, m.content, m.is_read, m.created_at, m.reply_to_id,
+              u.name as sender_name,
+              rm.content as reply_content, ru.name as reply_sender_name
        FROM messages m
        JOIN users u ON m.sender_id = u.id
+       LEFT JOIN messages rm ON m.reply_to_id = rm.id
+       LEFT JOIN users ru ON rm.sender_id = ru.id
        WHERE m.conversation_id = $1
        ORDER BY m.created_at ASC`,
       [conversationId]
@@ -105,7 +108,7 @@ router.get('/:conversationId', authenticate, async (req: AuthRequest, res: Respo
 // POST /api/messages/send - Send a message
 router.post('/send', authenticate, async (req: AuthRequest, res: Response) => {
   try {
-    const { receiverId, businessId, content } = req.body;
+    const { receiverId, businessId, content, replyToId } = req.body;
     const senderId = req.user!.userId;
 
     if (!receiverId || !businessId || !content) {
@@ -145,10 +148,10 @@ router.post('/send', authenticate, async (req: AuthRequest, res: Response) => {
     }
 
     const result = await pool.query(
-      `INSERT INTO messages (conversation_id, sender_id, receiver_id, business_id, content)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING id, conversation_id, sender_id, receiver_id, business_id, content, is_read, created_at`,
-      [conversationId, senderId, receiverId, businessId, content]
+      `INSERT INTO messages (conversation_id, sender_id, receiver_id, business_id, content, reply_to_id)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING id, conversation_id, sender_id, receiver_id, business_id, content, reply_to_id, is_read, created_at`,
+      [conversationId, senderId, receiverId, businessId, content, replyToId || null]
     );
 
     res.status(201).json({ message: result.rows[0] });
