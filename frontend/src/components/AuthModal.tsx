@@ -18,7 +18,6 @@ export function AuthModal({ show, onClose }: AuthModalProps) {
   const [address, setAddress] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState<'seeker' | 'provider'>('seeker');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { loginUser } = useAuth();
@@ -33,7 +32,6 @@ export function AuthModal({ show, onClose }: AuthModalProps) {
     setCity('');
     setPassword('');
     setConfirmPassword('');
-    setRole('seeker');
     setError('');
   };
 
@@ -58,7 +56,7 @@ export function AuthModal({ show, onClose }: AuthModalProps) {
       if (isLogin) {
         response = await login(email, password);
       } else {
-        response = await signup(name, email, password, role, phone || undefined, state || undefined, city || undefined);
+        response = await signup(name, email, password, 'seeker', phone || undefined, state || undefined, city || undefined);
       }
 
       loginUser(response.user, response.token);

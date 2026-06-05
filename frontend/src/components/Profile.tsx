@@ -70,14 +70,13 @@ export function Profile({ show, onClose }: ProfileProps) {
           <div className="profile-info">
             <h2>{user.name}</h2>
             <p className="profile-email">{user.email}</p>
-            <span className="profile-role">{user.role === 'provider' ? '🏪 Service Provider' : '🔍 Service Seeker'}</span>
             {user.city && user.state && (
               <p className="profile-location">📍 {user.city}, {user.state}</p>
             )}
           </div>
         </div>
 
-        {user.role === 'seeker' && (
+        {user && (
           <>
             <h3 className="profile-section-title">Service History</h3>
             <div className="profile-history">
