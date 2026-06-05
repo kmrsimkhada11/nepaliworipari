@@ -3196,3 +3196,44 @@ body {
   border-top: none;
   padding: 0;
 }
+
+
+/* Profile Overview Stats */
+.profile-overview {
+  margin-bottom: 1.5rem;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.overview-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.overview-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.overview-icon {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.overview-label {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  margin-top: 0.25rem;
+}

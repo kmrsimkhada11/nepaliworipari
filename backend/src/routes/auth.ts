@@ -124,4 +124,35 @@ router.get('/me', async (req: Request, res: Response) => {
   }
 });
 
+// GET /api/auth/stats - Get user overview stats
+router.get('/stats', async (req: Request, res: Response) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'No token provided' });
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: number };
+    const userId = decoded.userId;
+
+    const [listings, requests, messages, reviews] = await Promise.all([
+      pool.query('SELECT COUNT(*) as count FROM businesses WHERE user_id = $1', [userId]),
+      pool.query('SELECT COUNT(*) as count FROM service_posts WHERE seeker_id = $1', [userId]),
+      pool.query('SELECT COUNT(*) as count FROM messages WHERE receiver_id = $1 AND is_read = FALSE', [userId]),
+      pool.query("SELECT COUNT(*) as count FROM service_requests WHERE business_id IN (SELECT id FROM businesses WHERE user_id = $1) AND status = 'pending'", [userId]),
+    ]);
+
+    res.json({
+      activeListings: parseInt(listings.rows[0].count),
+      activeRequests: parseInt(requests.rows[0].count),
+      unreadMessages: parseInt(messages.rows[0].count),
+      pendingRequests: parseInt(reviews.rows[0].count),
+    });
+  } catch {
+    return res.status(401).json({ error: 'Invalid or expired token' });
+  }
+});
+
 export default router;

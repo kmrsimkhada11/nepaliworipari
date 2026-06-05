@@ -13,6 +13,13 @@ interface ServiceHistory {
   completed_at: string | null;
 }
 
+interface Stats {
+  activeListings: number;
+  activeRequests: number;
+  unreadMessages: number;
+  pendingRequests: number;
+}
+
 interface ProfileProps {
   show: boolean;
   onClose: () => void;
@@ -21,11 +28,13 @@ interface ProfileProps {
 export function Profile({ show, onClose }: ProfileProps) {
   const { user, token, logout } = useAuth();
   const [history, setHistory] = useState<ServiceHistory[]>([]);
+  const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (show && token) {
       loadHistory();
+      loadStats();
     }
   }, [show, token]);
 
@@ -43,6 +52,20 @@ export function Profile({ show, onClose }: ProfileProps) {
       console.error('Failed to load history');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadStats = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/auth/stats`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setStats(data);
+      }
+    } catch {
+      console.error('Failed to load stats');
     }
   };
 
@@ -76,6 +99,36 @@ export function Profile({ show, onClose }: ProfileProps) {
           </div>
         </div>
 
+        {/* Overview Stats */}
+        {stats && (
+          <div className="profile-overview">
+            <h3 className="profile-section-title">Overview</h3>
+            <div className="overview-grid">
+              <div className="overview-card">
+                <span className="overview-number">{stats.unreadMessages}</span>
+                <span className="overview-icon">💬</span>
+                <span className="overview-label">Chats to answer</span>
+              </div>
+              <div className="overview-card">
+                <span className="overview-number">{stats.activeListings}</span>
+                <span className="overview-icon">📋</span>
+                <span className="overview-label">Active listings</span>
+              </div>
+              <div className="overview-card">
+                <span className="overview-number">{stats.activeRequests}</span>
+                <span className="overview-icon">🔍</span>
+                <span className="overview-label">Active requests</span>
+              </div>
+              <div className="overview-card">
+                <span className="overview-number">{stats.pendingRequests}</span>
+                <span className="overview-icon">⏳</span>
+                <span className="overview-label">Pending approvals</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Service History */}
         {user && (
           <>
             <h3 className="profile-section-title">Service History</h3>
