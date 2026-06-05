@@ -94,7 +94,11 @@ export function BusinessCard({ business }: BusinessCardProps) {
         </h3>
         <div className="business-description-wrapper">
           <p className="business-description">{business.description || '\u00A0'}</p>
-          <Link to={`/business/${business.id}`} className="see-more-link">See more</Link>
+          {business.description && business.description.length > 100 ? (
+            <Link to={`/business/${business.id}`} className="see-more-link">See more</Link>
+          ) : (
+            <span className="see-more-placeholder">&nbsp;</span>
+          )}
         </div>
         <div className="business-contact">
           {business.phone && (

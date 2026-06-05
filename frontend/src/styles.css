@@ -3320,8 +3320,14 @@ body {
   text-decoration: none;
   font-weight: 600;
   margin-top: 0.25rem;
+  height: 1.2rem;
 }
 
 .see-more-link:hover {
   text-decoration: underline;
+}
+
+.see-more-placeholder {
+  display: inline-block;
+  height: 1.2rem;
 }
