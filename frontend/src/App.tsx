@@ -194,7 +194,7 @@ function AppContent() {
   if (authLoading) {
     return (
       <div className="app">
-        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} />
+        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setMode("seeker"); }} />
         <main className="main-content">
           <CategoryGrid
             parentCategories={parentCategories}
@@ -382,7 +382,7 @@ function AppContent() {
 
   return (
     <div className="app">
-      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} />
+      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setMode("seeker"); }} />
 
       <Routes>
         <Route path="/" element={<HomePage />} />

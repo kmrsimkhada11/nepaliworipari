@@ -13,9 +13,10 @@ interface HeaderProps {
   onProfileClick: () => void;
   onListBusinessClick: () => void;
   onFindNearMe: () => void;
+  onLogoClick: () => void;
 }
 
-export function Header({ selectedState, onStateChange, onLoginClick, onMessagesClick, onRequestsClick, onProfileClick, onListBusinessClick, onFindNearMe }: HeaderProps) {
+export function Header({ selectedState, onStateChange, onLoginClick, onMessagesClick, onRequestsClick, onProfileClick, onListBusinessClick, onFindNearMe, onLogoClick }: HeaderProps) {
   const { user, logout } = useAuth();
   const { unreadMessages, pendingRequests } = useNotifications();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,7 +26,7 @@ export function Header({ selectedState, onStateChange, onLoginClick, onMessagesC
       <header className="header">
         <div className="header-content">
           <div className="header-brand">
-            <Link to="/" className="header-logo">
+            <Link to="/" className="header-logo" onClick={onLogoClick}>
               <img src="/logo.svg" alt="NepaliOriPari" className="logo-img" />
             </Link>
           </div>
