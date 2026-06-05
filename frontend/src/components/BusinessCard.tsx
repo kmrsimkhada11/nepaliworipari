@@ -19,9 +19,8 @@ export function BusinessCard({ business }: BusinessCardProps) {
   const [requesting, setRequesting] = useState(false);
   const [requestStatus, setRequestStatus] = useState<string | null>(null);
 
-  const isSeeker = user?.role === 'seeker';
   const isOwner = user?.id === business.user_id;
-  const canChat = isSeeker && business.user_id && business.user_id !== user?.id;
+  const canChat = user && business.user_id && business.user_id !== user?.id;
 
   const handleDeleteBusiness = async () => {
     if (!confirm('Are you sure you want to delete this business?')) return;
@@ -138,7 +137,7 @@ export function BusinessCard({ business }: BusinessCardProps) {
                 💬 Chat
               </button>
             )}
-            {isSeeker && business.user_id && (
+            {user && business.user_id && business.user_id !== user?.id && (
               <button
                 className="request-service-btn"
                 onClick={handleRequestService}
