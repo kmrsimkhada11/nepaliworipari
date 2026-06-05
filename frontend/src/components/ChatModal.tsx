@@ -110,7 +110,16 @@ export function ChatModal({ show, onClose, businessId, businessName, providerId 
             <h3>💬 {businessName}</h3>
             <span className="chat-subtitle">Chat with provider</span>
           </div>
-          <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
+          <div className="chat-header-actions">
+            <button
+              type="button"
+              className="chat-view-btn"
+              onClick={() => { navigate(`/business/${businessId}`); onClose(); }}
+            >
+              👁️ View
+            </button>
+            <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
+          </div>
         </div>
 
         <div className="chat-messages">
@@ -134,15 +143,7 @@ export function ChatModal({ show, onClose, businessId, businessName, providerId 
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="chat-footer">
-          <button
-            type="button"
-            className="chat-view-btn"
-            onClick={() => { navigate(`/business/${businessId}`); onClose(); }}
-          >
-            👁️ View
-          </button>
-          <form onSubmit={handleSend} className="chat-input-form">
+        <form onSubmit={handleSend} className="chat-input-form">
           <input
             type="text"
             value={newMessage}
@@ -155,7 +156,6 @@ export function ChatModal({ show, onClose, businessId, businessName, providerId 
             Send
           </button>
         </form>
-        </div>
       </div>
     </div>
   );

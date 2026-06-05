@@ -3263,3 +3263,15 @@ body {
   color: var(--color-text-light);
   margin-top: 0.25rem;
 }
+
+
+/* Chat header actions */
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chat-header-actions .modal-close {
+  position: static;
+}
