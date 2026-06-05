@@ -420,13 +420,13 @@ function AppContent() {
       <RegisterBusiness
         show={showRegister}
         onClose={() => setShowRegister(false)}
-        onSuccess={loadBusinesses}
+        onSuccess={() => { loadBusinesses(); loadParentCategories(); }}
       />
       <AuthModal show={showAuth} onClose={() => setShowAuth(false)} />
       <ChatInbox show={showMessages} onClose={() => { setShowMessages(false); refreshCounts(); }} />
       <ServiceRequests show={showRequests} onClose={() => { setShowRequests(false); refreshCounts(); }} />
       <Profile show={showProfile} onClose={() => setShowProfile(false)} />
-      <PostServiceNeeded show={showPostNeeded} onClose={() => setShowPostNeeded(false)} onSuccess={() => {}} />
+      <PostServiceNeeded show={showPostNeeded} onClose={() => setShowPostNeeded(false)} onSuccess={() => window.location.reload()} />
     </div>
   );
 }
