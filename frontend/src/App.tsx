@@ -218,7 +218,7 @@ function AppContent() {
     );
   }
 
-  const HomePage = () => (
+  const homePage = (
     <main className="main-content">
       {/* Global filters - always visible */}
       <div className={`filters-row ${!user ? 'filters-row-logout' : ''}`}>
@@ -394,7 +394,7 @@ function AppContent() {
       <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} />
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={homePage} />
         <Route path="/business/:id" element={<BusinessPage />} />
         <Route path="/request/:id" element={<RequestPage />} />
       </Routes>
