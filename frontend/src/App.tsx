@@ -156,10 +156,10 @@ function AppContent() {
     setCurrentPage(1);
   };
 
-  const handleSearch = useCallback((query: string) => {
+  const handleSearch = (query: string) => {
     setSearchQuery(query);
     setCurrentPage(1);
-  }, []);
+  };
 
   // Debounce search
   useEffect(() => {
