@@ -104,3 +104,15 @@ export async function fetchMyBusinesses(token: string): Promise<{ businesses: im
   if (!response.ok) throw new Error(data.error || 'Failed to fetch your businesses');
   return data;
 }
+
+
+export async function googleLogin(credential: string): Promise<AuthResponse> {
+  const response = await fetch(`${API_BASE}/auth/google`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ credential }),
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error || 'Google login failed');
+  return data;
+}

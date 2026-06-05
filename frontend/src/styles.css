@@ -3265,3 +3265,31 @@ body {
 .chat-header-actions .modal-close {
   position: static;
 }
+
+
+/* Google Sign-In */
+.google-signin-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  margin: 0.75rem 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.auth-divider span {
+  padding: 0 0.75rem;
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+}

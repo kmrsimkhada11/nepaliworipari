@@ -10,6 +10,56 @@ const JWT_EXPIRES_IN = '7d';
 
 const VALID_ROLES = ['seeker', 'provider'];
 
+// Google Sign-In
+router.post('/google', async (req: Request, res: Response) => {
+  const { credential } = req.body;
+
+  if (!credential) {
+    return res.status(400).json({ error: 'Google credential is required' });
+  }
+
+  try {
+    // Decode the Google JWT token (payload is base64url encoded)
+    const parts = credential.split('.');
+    const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString());
+
+    const { email, name, picture } = payload;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Could not get email from Google' });
+    }
+
+    // Check if user exists
+    let user;
+    const existingUser = await pool.query('SELECT id, name, email, role, phone, state, city FROM users WHERE email = $1', [email.toLowerCase()]);
+
+    if (existingUser.rows.length > 0) {
+      user = existingUser.rows[0];
+    } else {
+      // Create new user (no password needed for Google users)
+      const result = await pool.query(
+        `INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role, phone, state, city`,
+        [name || email.split('@')[0], email.toLowerCase(), 'google_oauth', 'seeker']
+      );
+      user = result.rows[0];
+    }
+
+    // Generate JWT
+    const token = jwt.sign({ userId: user.id, email: user.email, role: user.role }, JWT_SECRET, {
+      expiresIn: JWT_EXPIRES_IN,
+    });
+
+    res.json({
+      message: 'Login successful',
+      user: { id: user.id, name: user.name, email: user.email, role: user.role, phone: user.phone, state: user.state, city: user.city },
+      token,
+    });
+  } catch (error) {
+    console.error('Google auth error:', error);
+    res.status(500).json({ error: 'Failed to authenticate with Google' });
+  }
+});
+
 // Signup
 router.post('/signup', async (req: Request, res: Response) => {
   const { name, email, password, role, phone, state, city } = req.body;

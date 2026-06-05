@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
-import { login, signup } from '../api';
+import { GoogleLogin } from '@react-oauth/google';
+import { login, signup, googleLogin } from '../api';
 import { useAuth } from '../context/AuthContext';
 import { AUSTRALIAN_STATES } from '../types';
 
@@ -78,6 +79,31 @@ export function AuthModal({ show, onClose }: AuthModalProps) {
         <h2>{isLogin ? 'Login' : 'Create Account'}</h2>
 
         {error && <div className="auth-error">{error}</div>}
+
+        <div className="google-signin-wrapper">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              if (credentialResponse.credential) {
+                try {
+                  const response = await googleLogin(credentialResponse.credential);
+                  loginUser(response.user, response.token);
+                  resetForm();
+                  onClose();
+                } catch (err) {
+                  setError(err instanceof Error ? err.message : 'Google login failed');
+                }
+              }
+            }}
+            onError={() => setError('Google login failed')}
+            size="large"
+            width="100%"
+            text={isLogin ? 'signin_with' : 'signup_with'}
+          />
+        </div>
+
+        <div className="auth-divider">
+          <span>or</span>
+        </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
           {!isLogin && (
