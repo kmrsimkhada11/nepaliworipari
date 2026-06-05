@@ -456,6 +456,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 1.25rem;
+  align-items: start;
 }
 
 .business-card {
@@ -523,6 +524,10 @@ body {
   color: var(--color-text-light);
   margin-bottom: 1rem;
   line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .business-contact {
@@ -3292,4 +3297,23 @@ body {
   padding: 0 0.75rem;
   font-size: 0.8rem;
   color: var(--color-text-light);
+}
+
+
+/* See more link */
+.business-description-wrapper {
+  margin-bottom: 1rem;
+}
+
+.see-more-link {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.see-more-link:hover {
+  text-decoration: underline;
 }
