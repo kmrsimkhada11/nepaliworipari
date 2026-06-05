@@ -41,8 +41,8 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     if (user && token) {
       fetchCounts();
 
-      // Poll for notifications every 30 seconds
-      const interval = setInterval(fetchCounts, 30000);
+      // Poll for notifications every 60 seconds
+      const interval = setInterval(fetchCounts, 60000);
       return () => clearInterval(interval);
     } else {
       setUnreadMessages(0);

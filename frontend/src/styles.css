@@ -2913,18 +2913,8 @@ body {
   }
 }
 
-.category-section,
-.business-section,
-.service-wanted-feed,
-.provider-dashboard-header,
-.breadcrumb {
+.category-section {
   animation: fadeIn 0.25s ease;
-}
-
-.category-grid,
-.business-grid,
-.service-posts-grid {
-  animation: fadeIn 0.3s ease;
 }
 
 
