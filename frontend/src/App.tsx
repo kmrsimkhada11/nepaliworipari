@@ -26,6 +26,7 @@ function AppContent() {
   const [selectedParent, setSelectedParent] = useState<string | null>(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [parentCategories, setParentCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Category[]>([]);
   const [businesses, setBusinesses] = useState<Business[]>([]);
@@ -80,10 +81,10 @@ function AppContent() {
     setLoading(true);
     try {
       // If searching, always search all businesses
-      if (searchQuery) {
+      if (debouncedSearch) {
         const data = await fetchBusinesses({
           state: selectedState,
-          search: searchQuery,
+          search: debouncedSearch,
           page: currentPage,
           limit: 20,
         });
@@ -111,7 +112,7 @@ function AppContent() {
           state: selectedState,
           category: selectedSubcategory || undefined,
           parentCategory: !selectedSubcategory ? selectedParent || undefined : undefined,
-          search: searchQuery || undefined,
+          search: debouncedSearch || undefined,
           page: currentPage,
           limit: 20,
         });
@@ -125,7 +126,7 @@ function AppContent() {
     } finally {
       setLoading(false);
     }
-  }, [selectedState, selectedParent, selectedSubcategory, searchQuery, currentPage, locationEnabled, userLat, userLng, radius, isProvider, token, authLoading]);
+  }, [selectedState, selectedParent, selectedSubcategory, debouncedSearch, currentPage, locationEnabled, userLat, userLng, radius, isProvider, token, authLoading]);
 
   useEffect(() => {
     loadParentCategories();
@@ -159,6 +160,14 @@ function AppContent() {
     setSearchQuery(query);
     setCurrentPage(1);
   }, []);
+
+  // Debounce search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -194,7 +203,7 @@ function AppContent() {
   if (authLoading) {
     return (
       <div className="app">
-        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setMode("seeker"); }} />
+        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} />
         <main className="main-content">
           <CategoryGrid
             parentCategories={parentCategories}
@@ -294,7 +303,7 @@ function AppContent() {
             </>
           )}
         </div>
-        <SearchBar onSearch={handleSearch} key="main-search" />
+        <SearchBar value={searchQuery} onChange={handleSearch} key="main-search" />
         {!user && (
           <button className="register-btn login-main-btn" onClick={() => setShowAuth(true)}>
             Login / Sign Up
@@ -367,7 +376,7 @@ function AppContent() {
           )}
 
           {/* Step 3: Show businesses when subcategory is selected or search is active */}
-          {(selectedSubcategory || searchQuery) && (
+          {(selectedSubcategory || debouncedSearch) && (
             <BusinessList
               businesses={businesses}
               pagination={pagination}
@@ -382,7 +391,7 @@ function AppContent() {
 
   return (
     <div className="app">
-      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setMode("seeker"); }} />
+      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} />
 
       <Routes>
         <Route path="/" element={<HomePage />} />

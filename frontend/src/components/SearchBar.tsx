@@ -1,35 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 interface SearchBarProps {
-  onSearch: (query: string) => void;
+  value: string;
+  onChange: (query: string) => void;
 }
 
-export function SearchBar({ onSearch }: SearchBarProps) {
-  const [query, setQuery] = useState('');
-  const onSearchRef = useRef(onSearch);
-  const isFirstRender = useRef(true);
-  onSearchRef.current = onSearch;
-
-  useEffect(() => {
-    // Skip the first render to avoid clearing
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    const timer = setTimeout(() => {
-      onSearchRef.current(query);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [query]);
+export function SearchBar({ value, onChange }: SearchBarProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearchRef.current(query);
   };
 
   const handleClear = () => {
-    setQuery('');
-    onSearchRef.current('');
+    onChange('');
+    inputRef.current?.focus();
   };
 
   return (
@@ -40,14 +25,15 @@ export function SearchBar({ onSearch }: SearchBarProps) {
           <path d="m21 21-4.35-4.35"/>
         </svg>
         <input
+          ref={inputRef}
           type="text"
           className="search-input"
           placeholder="Search..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
           aria-label="Search businesses"
         />
-        {query && (
+        {value && (
           <button
             type="button"
             className="clear-button"
