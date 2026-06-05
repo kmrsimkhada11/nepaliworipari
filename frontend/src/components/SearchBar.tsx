@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -6,13 +6,15 @@ interface SearchBarProps {
 
 export function SearchBar({ onSearch }: SearchBarProps) {
   const [query, setQuery] = useState('');
+  const onSearchRef = useRef(onSearch);
+  onSearchRef.current = onSearch;
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      onSearch(query);
+      onSearchRef.current(query);
     }, 400);
     return () => clearTimeout(timer);
-  }, [query, onSearch]);
+  }, [query]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
