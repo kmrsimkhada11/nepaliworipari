@@ -11,12 +11,10 @@ interface HeaderProps {
   onMessagesClick: () => void;
   onRequestsClick: () => void;
   onProfileClick: () => void;
-  onListBusinessClick: () => void;
-  onFindNearMe: () => void;
   onLogoClick: () => void;
 }
 
-export function Header({ selectedState, onStateChange, onLoginClick, onMessagesClick, onRequestsClick, onProfileClick, onListBusinessClick, onFindNearMe, onLogoClick }: HeaderProps) {
+export function Header({ selectedState, onStateChange, onLoginClick, onMessagesClick, onRequestsClick, onProfileClick, onLogoClick }: HeaderProps) {
   const { user, logout } = useAuth();
   const { unreadMessages, pendingRequests } = useNotifications();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -79,13 +77,6 @@ export function Header({ selectedState, onStateChange, onLoginClick, onMessagesC
               ))}
             </select>
           </div>
-
-          <button className="side-menu-item" onClick={() => { onFindNearMe(); setMenuOpen(false); }}>
-            📍 Find Near Me
-          </button>
-          <button className="side-menu-item" onClick={() => { onListBusinessClick(); setMenuOpen(false); }}>
-            ➕ List Your Business
-          </button>
 
           {!user ? (
             <button className="side-menu-item side-menu-login" onClick={() => { onLoginClick(); setMenuOpen(false); }}>

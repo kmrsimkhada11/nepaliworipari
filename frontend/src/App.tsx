@@ -203,7 +203,7 @@ function AppContent() {
   if (authLoading) {
     return (
       <div className="app">
-        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} />
+        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} />
         <main className="main-content">
           <CategoryGrid
             parentCategories={parentCategories}
@@ -391,7 +391,7 @@ function AppContent() {
 
   return (
     <div className="app">
-      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onListBusinessClick={handleListBusinessClick} onFindNearMe={handleLocationToggle} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} />
+      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} />
 
       <Routes>
         <Route path="/" element={homePage} />
