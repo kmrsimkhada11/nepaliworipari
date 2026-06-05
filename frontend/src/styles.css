@@ -3426,3 +3426,15 @@ body {
 .emoji-toggle-btn:hover {
   transform: scale(1.1);
 }
+
+
+/* Chat seen status */
+.chat-seen {
+  font-size: 0.6rem;
+  opacity: 0.6;
+}
+
+.chat-seen.seen {
+  color: #34b7f1;
+  opacity: 1;
+}

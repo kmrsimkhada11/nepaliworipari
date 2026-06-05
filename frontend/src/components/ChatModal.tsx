@@ -10,6 +10,7 @@ interface Message {
   content: string;
   sender_name?: string;
   created_at: string;
+  is_read?: boolean;
   reply_to_id?: number;
   reply_content?: string;
   reply_sender_name?: string;
@@ -133,6 +134,11 @@ export function ChatModal({ show, onClose, businessId, businessName, providerId 
                 <div className="chat-bubble-footer">
                   <span className="chat-time">
                     {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    {msg.sender_id === user.id && (
+                      <span className={`chat-seen ${msg.is_read ? 'seen' : ''}`}>
+                        {msg.is_read ? ' ✓✓' : ' ✓'}
+                      </span>
+                    )}
                   </span>
                   <button className="chat-reply-btn" onClick={() => setReplyTo(msg)}>↩</button>
                 </div>
