@@ -79,8 +79,18 @@ function AppContent() {
 
     setLoading(true);
     try {
-      // Providers only see their own businesses
-      if (isProvider && token) {
+      // If searching, always search all businesses
+      if (searchQuery) {
+        const data = await fetchBusinesses({
+          state: selectedState,
+          search: searchQuery,
+          page: currentPage,
+          limit: 20,
+        });
+        setBusinesses(data.businesses);
+        setPagination(data.pagination);
+      } else if (isProvider && token) {
+        // Providers see their own businesses
         const data = await fetchMyBusinesses(token);
         setBusinesses(data.businesses);
         setPagination(null);
