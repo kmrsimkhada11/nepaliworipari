@@ -7,23 +7,29 @@ interface SearchBarProps {
 export function SearchBar({ onSearch }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const onSearchRef = useRef(onSearch);
+  const isFirstRender = useRef(true);
   onSearchRef.current = onSearch;
 
   useEffect(() => {
+    // Skip the first render to avoid clearing
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     const timer = setTimeout(() => {
       onSearchRef.current(query);
-    }, 400);
+    }, 500);
     return () => clearTimeout(timer);
   }, [query]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch(query);
+    onSearchRef.current(query);
   };
 
   const handleClear = () => {
     setQuery('');
-    onSearch('');
+    onSearchRef.current('');
   };
 
   return (

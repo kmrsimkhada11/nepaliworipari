@@ -294,7 +294,7 @@ function AppContent() {
             </>
           )}
         </div>
-        <SearchBar onSearch={handleSearch} />
+        <SearchBar onSearch={handleSearch} key="main-search" />
         {!user && (
           <button className="register-btn login-main-btn" onClick={() => setShowAuth(true)}>
             Login / Sign Up
