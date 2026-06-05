@@ -3303,6 +3303,7 @@ body {
 /* See more link */
 .business-description-wrapper {
   margin-bottom: 1rem;
+  min-height: calc(0.875rem * 1.5 * 3);
 }
 
 .see-more-link {
