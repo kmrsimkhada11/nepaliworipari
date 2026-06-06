@@ -76,7 +76,7 @@ export function AuthModal({ show, onClose }: AuthModalProps) {
         <button className="modal-close" onClick={onClose} aria-label="Close">
           ✕
         </button>
-        <h2>{isLogin ? 'Login' : 'Create Account'}</h2>
+        <h2>{isLogin ? 'Sign in to add your post' : 'Sign up to post what you are looking for'}</h2>
 
         {error && <div className="auth-error">{error}</div>}
 
@@ -220,9 +220,9 @@ export function AuthModal({ show, onClose }: AuthModalProps) {
         </form>
 
         <p className="auth-switch">
-          {isLogin ? "Don't have an account? " : 'Already have an account? '}
+          {isLogin ? "Don't have an account? " : 'Already signed up? '}
           <button type="button" className="auth-switch-btn" onClick={switchMode}>
-            {isLogin ? 'Sign Up' : 'Login'}
+            {isLogin ? 'Sign Up' : 'Sign In'}
           </button>
         </p>
       </div>

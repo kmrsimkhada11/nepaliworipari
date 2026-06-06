@@ -306,7 +306,7 @@ function AppContent() {
         <SearchBar value={searchQuery} onChange={handleSearch} key="main-search" />
         {!user && (
           <button className="register-btn login-main-btn" onClick={() => setShowAuth(true)}>
-            Login / Sign Up
+            ➕ Add Post
           </button>
         )}
       </div>
