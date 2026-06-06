@@ -171,7 +171,7 @@ export function AuthModal({ show, onClose }: AuthModalProps) {
                     type="text"
                     value={city}
                     readOnly
-                    placeholder="Auto-filled from postcode"
+                    placeholder=""
                   />
                 </div>
               </div>

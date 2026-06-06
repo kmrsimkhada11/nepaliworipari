@@ -3578,3 +3578,36 @@ body {
 .postcode-option:hover {
   background: var(--color-accent);
 }
+
+
+/* Compact form for modals */
+.register-form .form-group,
+.auth-form .form-group {
+  gap: 0.2rem;
+}
+
+.register-form .form-group input,
+.register-form .form-group select,
+.register-form .form-group textarea,
+.auth-form .form-group input,
+.auth-form .form-group select {
+  padding: 0.5rem 0.7rem;
+  font-size: 0.85rem;
+}
+
+.register-form,
+.auth-form {
+  gap: 0.6rem;
+}
+
+.register-form .form-row {
+  gap: 0.5rem;
+}
+
+
+/* State select compact */
+.form-row select[id$="-state"] {
+  max-width: 120px;
+  font-size: 0.8rem;
+  padding: 0.5rem 0.5rem;
+}

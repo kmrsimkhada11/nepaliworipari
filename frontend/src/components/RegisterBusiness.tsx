@@ -181,7 +181,7 @@ export function RegisterBusiness({ show, onClose, onSuccess }: RegisterBusinessP
                 </div>
                 <div className="form-group">
                   <label htmlFor="reg-city">City/Suburb *</label>
-                  <input id="reg-city" type="text" value={city} readOnly placeholder="Auto-filled from postcode" />
+                  <input id="reg-city" type="text" value={city} readOnly placeholder="" />
                 </div>
               </div>
 
