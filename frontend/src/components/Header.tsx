@@ -44,6 +44,11 @@ export function Header({ selectedState, onStateChange, onLoginClick, onMessagesC
                 </button>
               </div>
             )}
+            {!user && (
+              <button className="auth-btn nav-login-btn" onClick={onLoginClick}>
+                Login
+              </button>
+            )}
             <button className="hamburger-btn" onClick={() => setMenuOpen(true)} aria-label="Menu">
               <span></span>
               <span></span>
