@@ -160,7 +160,7 @@ export function ChatModal({ show, onClose, businessId, businessName, providerId 
 
         {showEmoji && (
           <div className="emoji-picker-container">
-            <EmojiPicker onEmojiClick={onEmojiClick} width="100%" height={300} />
+            <EmojiPicker onEmojiClick={onEmojiClick} width="100%" height={300} searchDisabled skinTonesDisabled previewConfig={{ showPreview: false }} />
           </div>
         )}
 
