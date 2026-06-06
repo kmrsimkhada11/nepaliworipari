@@ -157,7 +157,7 @@ export function PostServiceNeeded({ show, onClose, onSuccess }: PostServiceNeede
                 </div>
                 <div className="form-group">
                   <label htmlFor="post-city">City/Suburb</label>
-                  <input id="post-city" type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="e.g. Brisbane" />
+                  <input id="post-city" type="text" value={city} readOnly placeholder="Auto-filled from postcode" />
                 </div>
               </div>
 

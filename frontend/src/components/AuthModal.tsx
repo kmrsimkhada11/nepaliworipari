@@ -170,8 +170,8 @@ export function AuthModal({ show, onClose }: AuthModalProps) {
                     id="auth-city"
                     type="text"
                     value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    placeholder="e.g. Brisbane"
+                    readOnly
+                    placeholder="Auto-filled from postcode"
                   />
                 </div>
               </div>
