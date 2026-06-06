@@ -12,6 +12,7 @@ import reviewsRouter from './routes/reviews';
 import messagesRouter from './routes/messages';
 import serviceRequestsRouter from './routes/serviceRequests';
 import servicePostsRouter from './routes/servicePosts';
+import postcodeRouter from './routes/postcode';
 
 dotenv.config();
 
@@ -45,6 +46,7 @@ app.use('/api/reviews', reviewsRouter);
 app.use('/api/messages', messagesRouter);
 app.use('/api/service-requests', serviceRequestsRouter);
 app.use('/api/service-posts', servicePostsRouter);
+app.use('/api/postcode', postcodeRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {
