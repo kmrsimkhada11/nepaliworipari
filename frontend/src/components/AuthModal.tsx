@@ -3,6 +3,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { login, signup, googleLogin } from '../api';
 import { useAuth } from '../context/AuthContext';
 import { AUSTRALIAN_STATES } from '../types';
+import { PostcodeLookup } from './PostcodeLookup';
 
 interface AuthModalProps {
   show: boolean;
@@ -146,6 +147,8 @@ export function AuthModal({ show, onClose }: AuthModalProps) {
                   placeholder="e.g. 0412345678"
                 />
               </div>
+
+              <PostcodeLookup onSuburbSelect={(suburb, st) => { setCity(suburb); setState(st); }} />
 
               <div className="form-row">
                 <div className="form-group">
