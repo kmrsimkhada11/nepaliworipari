@@ -176,7 +176,7 @@ export function ChatModal({ show, onClose, businessId, businessName, providerId 
             className="chat-input"
           />
           <button type="submit" className="chat-send-btn" disabled={!newMessage.trim()}>
-            Send
+            ➤
           </button>
         </form>
       </div>
