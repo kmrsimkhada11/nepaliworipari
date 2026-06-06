@@ -1064,6 +1064,26 @@ body {
 
   .chat-modal .chat-input-form {
     flex-shrink: 0;
+    padding: 0.5rem;
+    gap: 0.3rem;
+  }
+
+  .chat-modal .chat-input {
+    min-width: 0;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .chat-modal .chat-send-btn {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  .chat-modal .emoji-toggle-btn {
+    flex-shrink: 0;
+    font-size: 1rem;
   }
 
   .chat-modal .modal-close {
