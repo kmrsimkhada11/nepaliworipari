@@ -1039,6 +1039,11 @@ body {
     inset: 0;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chat-modal .chat-header {
+    flex-shrink: 0;
   }
 
   .chat-modal .chat-messages {
@@ -1047,12 +1052,18 @@ body {
     min-height: 0;
   }
 
-  .chat-modal .chat-footer {
-    position: sticky;
-    bottom: 0;
-    background: var(--color-white);
-    padding: 0.5rem;
-    border-top: 1px solid var(--color-border);
+  .chat-modal .emoji-picker-container {
+    flex-shrink: 0;
+    max-height: 180px;
+    overflow: hidden;
+  }
+
+  .chat-modal .chat-reply-bar {
+    flex-shrink: 0;
+  }
+
+  .chat-modal .chat-input-form {
+    flex-shrink: 0;
   }
 
   .chat-modal .modal-close {
