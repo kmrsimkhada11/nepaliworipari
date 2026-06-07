@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE } from '../config';
+import { EditRequest } from './EditRequest';
 
 interface MyRequestsProps {
   onPostClick: () => void;
@@ -25,6 +26,7 @@ export function MyRequests({ onPostClick }: MyRequestsProps) {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<MyPost[]>([]);
   const [loading, setLoading] = useState(false);
+  const [editingPost, setEditingPost] = useState<MyPost | null>(null);
 
   useEffect(() => {
     if (user && token) {
@@ -97,7 +99,7 @@ export function MyRequests({ onPostClick }: MyRequestsProps) {
           posts.map((post) => (
             <article key={post.id} className="business-card">
               <div className="owner-actions-top">
-                <button className="edit-btn edit-btn-top" onClick={() => {}}>
+                <button className="edit-btn edit-btn-top" onClick={() => setEditingPost(post)}>
                   ✏️
                 </button>
                 <button className="delete-btn-top" onClick={() => handleDelete(post.id)}>
@@ -132,6 +134,14 @@ export function MyRequests({ onPostClick }: MyRequestsProps) {
           ))
         )}
       </div>
+      {editingPost && (
+        <EditRequest
+          post={editingPost}
+          show={true}
+          onClose={() => setEditingPost(null)}
+          onSuccess={() => { setEditingPost(null); loadMyPosts(); }}
+        />
+      )}
     </div>
   );
 }

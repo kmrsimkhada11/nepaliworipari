@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Business, Category, AUSTRALIAN_STATES } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE } from '../config';
+import { PostcodeLookup } from './PostcodeLookup';
 
 interface EditBusinessProps {
   business: Business;
@@ -131,6 +132,8 @@ export function EditBusiness({ business, show, onClose, onSuccess }: EditBusines
               </select>
             </div>
           )}
+
+          <PostcodeLookup onSuburbSelect={(suburb, st) => { setCity(suburb); setState(st); }} />
 
           <div className="form-row">
             <div className="form-group">

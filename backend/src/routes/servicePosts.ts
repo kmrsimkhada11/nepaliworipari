@@ -130,6 +130,30 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
+// PUT /api/service-posts/:id - Update a service post
+router.put('/:id', authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const seekerId = req.user!.userId;
+    const { title, description, categoryId, state, city, budget } = req.body;
+
+    const result = await pool.query(
+      `UPDATE service_posts SET title = $1, description = $2, category_id = $3, state = $4, city = $5, budget = $6
+       WHERE id = $7 AND seeker_id = $8 RETURNING *`,
+      [title, description || null, categoryId || null, state, city || null, budget || null, id, seekerId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Post not found or not authorized' });
+    }
+
+    res.json({ message: 'Post updated', post: result.rows[0] });
+  } catch (error) {
+    console.error('Error updating post:', error);
+    res.status(500).json({ error: 'Failed to update post' });
+  }
+});
+
 // PATCH /api/service-posts/:id/close - Seeker closes their post
 router.patch('/:id/close', authenticate, async (req: AuthRequest, res: Response) => {
   try {
