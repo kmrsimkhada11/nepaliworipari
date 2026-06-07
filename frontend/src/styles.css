@@ -350,7 +350,7 @@ body {
   cursor: pointer;
   transition: all 0.2s;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .category-card::before {
