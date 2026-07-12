@@ -239,76 +239,12 @@ function AppContent() {
               </button>
             </div>
           ) : (
-            <>
-              {!locationEnabled ? (
-                <button
-                  className="register-btn location-btn"
-                  onClick={handleLocationToggle}
-                >
-                  📍 Near Me
-                </button>
-              ) : (
-                <select
-                  className="register-btn location-btn active radius-dropdown"
-                  value={radius}
-                  onChange={(e) => {
-                    if (e.target.value === 'off') {
-                      handleLocationToggle();
-                    } else {
-                      setRadius(parseInt(e.target.value));
-                      setCurrentPage(1);
-                    }
-                  }}
-                >
-                  <option value="5">📍 5 km ▾</option>
-                  <option value="10">📍 10 km ▾</option>
-                  <option value="25">📍 25 km ▾</option>
-                  <option value="50">📍 50 km ▾</option>
-                  <option value="100">📍 100 km ▾</option>
-                  <option value="off">✕ Turn off</option>
-                </select>
-              )}
-            </>
-          )}
-          {user && (
-            <>
-              {!locationEnabled ? (
-                <button
-                  className="register-btn location-btn"
-                  onClick={handleLocationToggle}
-                >
-                  📍 Near Me
-                </button>
-              ) : (
-                <select
-                  className="register-btn location-btn active radius-dropdown"
-                  value={radius}
-                  onChange={(e) => {
-                    if (e.target.value === 'off') {
-                      handleLocationToggle();
-                    } else {
-                      setRadius(parseInt(e.target.value));
-                      setCurrentPage(1);
-                    }
-                  }}
-                >
-                  <option value="5">📍 5 km ▾</option>
-                  <option value="10">📍 10 km ▾</option>
-                  <option value="25">📍 25 km ▾</option>
-                  <option value="50">📍 50 km ▾</option>
-                  <option value="100">📍 100 km ▾</option>
-                  <option value="off">✕ Turn off</option>
-                </select>
-              )}
-            </>
+            <button className="register-btn login-main-btn" onClick={() => setShowAuth(true)}>
+              ➕ Add Post
+            </button>
           )}
         </div>
-        <SearchBar value={searchQuery} onChange={handleSearch} key="main-search" />
-        {!user && (
-          <button className="register-btn login-main-btn" onClick={() => setShowAuth(true)}>
-            ➕ Add Post
-          </button>
-        )}
+        <SearchBar value={searchQuery} onChange={handleSearch} key="main-search" locationEnabled={locationEnabled} radius={radius} onLocationToggle={handleLocationToggle} onRadiusChange={(r) => { setRadius(r); setCurrentPage(1); }} />
       </div>
 
       {isProvider ? (

@@ -3,9 +3,13 @@ import { useRef } from 'react';
 interface SearchBarProps {
   value: string;
   onChange: (query: string) => void;
+  locationEnabled?: boolean;
+  radius?: number;
+  onLocationToggle?: () => void;
+  onRadiusChange?: (radius: number) => void;
 }
 
-export function SearchBar({ value, onChange }: SearchBarProps) {
+export function SearchBar({ value, onChange, locationEnabled, radius, onLocationToggle, onRadiusChange }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -42,6 +46,32 @@ export function SearchBar({ value, onChange }: SearchBarProps) {
           >
             ✕
           </button>
+        )}
+        {onLocationToggle && (
+          !locationEnabled ? (
+            <button type="button" className="search-location-btn" onClick={onLocationToggle}>
+              📍
+            </button>
+          ) : (
+            <select
+              className="search-location-select"
+              value={radius}
+              onChange={(e) => {
+                if (e.target.value === 'off') {
+                  onLocationToggle();
+                } else if (onRadiusChange) {
+                  onRadiusChange(parseInt(e.target.value));
+                }
+              }}
+            >
+              <option value="5">5km</option>
+              <option value="10">10km</option>
+              <option value="25">25km</option>
+              <option value="50">50km</option>
+              <option value="100">100km</option>
+              <option value="off">✕</option>
+            </select>
+          )
         )}
       </form>
     </div>
