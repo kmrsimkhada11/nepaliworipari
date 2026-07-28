@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
-import { SearchBar } from './components/SearchBar';
 import { CategoryGrid } from './components/CategoryGrid';
 import { BusinessList } from './components/BusinessList';
 import { RegisterBusiness } from './components/RegisterBusiness';
@@ -203,7 +202,7 @@ function AppContent() {
   if (authLoading) {
     return (
       <div className="app">
-        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} />
+        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} searchValue={searchQuery} onSearchChange={handleSearch} locationEnabled={locationEnabled} radius={radius} onLocationToggle={handleLocationToggle} onRadiusChange={(r) => { setRadius(r); setCurrentPage(1); }} />
         <main className="main-content">
           <CategoryGrid
             parentCategories={parentCategories}
@@ -220,32 +219,33 @@ function AppContent() {
 
   const homePage = (
     <main className="main-content">
-      {/* Global filters - always visible */}
-      <div className={`filters-row ${!user ? 'filters-row-logout' : ''}`}>
-        <div className="filters-actions">
-          {user ? (
-            <div className="mode-switch">
-              <button
-                className={`mode-switch-btn ${mode === 'seeker' ? 'active' : ''}`}
-                onClick={() => setMode('seeker')}
-              >
-                🔍 Looking for
-              </button>
-              <button
-                className={`mode-switch-btn ${mode === 'provider' ? 'active' : ''}`}
-                onClick={() => setMode('provider')}
-              >
-                ➕ Listing
-              </button>
-            </div>
-          ) : (
-            <button className="register-btn login-main-btn" onClick={() => setShowAuth(true)}>
-              ➕ Add Post
+      {/* Mode switch */}
+      {user && (
+        <div className="mode-bar">
+          <div className="mode-switch">
+            <button
+              className={`mode-switch-btn ${mode === 'seeker' ? 'active' : ''}`}
+              onClick={() => setMode('seeker')}
+            >
+              🔍 Looking for
             </button>
-          )}
+            <button
+              className={`mode-switch-btn ${mode === 'provider' ? 'active' : ''}`}
+              onClick={() => setMode('provider')}
+            >
+              ➕ Listing
+            </button>
+          </div>
         </div>
-        <SearchBar value={searchQuery} onChange={handleSearch} key="main-search" locationEnabled={locationEnabled} radius={radius} onLocationToggle={handleLocationToggle} onRadiusChange={(r) => { setRadius(r); setCurrentPage(1); }} />
-      </div>
+      )}
+
+      {!user && (
+        <div className="mode-bar">
+          <button className="airbnb-btn-primary" onClick={() => setShowAuth(true)}>
+            Add Your Post
+          </button>
+        </div>
+      )}
 
       {isProvider ? (
         <>
@@ -327,7 +327,7 @@ function AppContent() {
 
   return (
     <div className="app">
-      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} />
+      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} searchValue={searchQuery} onSearchChange={handleSearch} locationEnabled={locationEnabled} radius={radius} onLocationToggle={handleLocationToggle} onRadiusChange={(r) => { setRadius(r); setCurrentPage(1); }} />
 
       <Routes>
         <Route path="/" element={homePage} />
