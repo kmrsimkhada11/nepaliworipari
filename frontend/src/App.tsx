@@ -15,7 +15,7 @@ import { BusinessPage } from './pages/BusinessPage';
 import { RequestPage } from './pages/RequestPage';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider, useNotifications } from './context/NotificationContext';
-import { fetchCategoryStats, fetchSubcategories, fetchBusinesses, fetchNearbyBusinesses, fetchMyBusinesses } from './api';
+import { fetchCategoryStats, fetchSubcategories, fetchBusinesses, fetchNearbyBusinesses, fetchMyBusinesses, fetchPopularBusinesses } from './api';
 import { AustralianState, Business, Category, PaginationInfo } from './types';
 
 function AppContent() {
@@ -46,6 +46,7 @@ function AppContent() {
   const [showPostNeeded, setShowPostNeeded] = useState(false);
   const [mode, setMode] = useState<'seeker' | 'provider'>('seeker');
   const [activeTab, setActiveTab] = useState<'all' | 'homes' | 'experiences' | 'services'>('all');
+  const [popularBusinesses, setPopularBusinesses] = useState<Business[]>([]);
 
   const isProvider = mode === 'provider';
 
@@ -139,6 +140,13 @@ function AppContent() {
   useEffect(() => {
     loadBusinesses();
   }, [loadBusinesses]);
+
+  // Load popular businesses
+  useEffect(() => {
+    fetchPopularBusinesses(selectedState, 8)
+      .then(data => setPopularBusinesses(data.businesses))
+      .catch(() => setPopularBusinesses([]));
+  }, [selectedState]);
 
   const handleStateChange = (state: AustralianState) => {
     setSelectedState(state);
@@ -338,15 +346,16 @@ function AppContent() {
                   {/* Most Popular Services */}
                   <section className="landing-section">
                     <h2 className="section-title">Most Popular Services</h2>
-                    <CategoryGrid
-                      parentCategories={parentCategories.slice(0, 6)}
-                      subcategories={[]}
-                      selectedParent={null}
-                      selectedSubcategory={null}
-                      onParentSelect={handleParentSelect}
-                      onSubcategorySelect={handleSubcategorySelect}
-                      onPostClick={() => setShowPostNeeded(true)}
-                    />
+                    {popularBusinesses.length > 0 ? (
+                      <BusinessList
+                        businesses={popularBusinesses}
+                        pagination={null}
+                        loading={false}
+                        onPageChange={() => {}}
+                      />
+                    ) : (
+                      <div className="loading"><div className="loading-spinner"></div></div>
+                    )}
                   </section>
 
                   {/* Available Services */}

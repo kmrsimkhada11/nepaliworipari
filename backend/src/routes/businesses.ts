@@ -105,6 +105,53 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
+// GET /api/businesses/popular - Get most popular businesses (by reviews + service requests)
+router.get('/popular', async (req: Request, res: Response) => {
+  try {
+    const { state, limit = '8' } = req.query;
+    const limitNum = parseInt(limit as string);
+
+    let query = `
+      SELECT b.*, c.name as category_name, c.slug as category_slug, c.icon as category_icon,
+             pc.name as parent_category_name, pc.slug as parent_category_slug,
+             COALESCE(rv.review_count, 0) as review_count,
+             COALESCE(rv.avg_rating, 0) as avg_rating,
+             COALESCE(sr.request_count, 0) as request_count,
+             (COALESCE(rv.review_count, 0) * 2 + COALESCE(sr.request_count, 0)) as popularity_score
+      FROM businesses b
+      LEFT JOIN categories c ON b.category_id = c.id
+      LEFT JOIN categories pc ON c.parent_id = pc.id
+      LEFT JOIN (
+        SELECT business_id, COUNT(*) as review_count, AVG(rating) as avg_rating
+        FROM reviews GROUP BY business_id
+      ) rv ON rv.business_id = b.id
+      LEFT JOIN (
+        SELECT business_id, COUNT(*) as request_count
+        FROM service_requests GROUP BY business_id
+      ) sr ON sr.business_id = b.id
+      WHERE 1=1
+    `;
+    const params: (string | number)[] = [];
+    let paramIndex = 1;
+
+    if (state && state !== 'ALL') {
+      query += ` AND b.state = $${paramIndex}`;
+      params.push(state as string);
+      paramIndex++;
+    }
+
+    query += ` ORDER BY popularity_score DESC, b.is_featured DESC, b.name ASC`;
+    query += ` LIMIT $${paramIndex}`;
+    params.push(limitNum);
+
+    const result = await pool.query(query, params);
+    res.json({ businesses: result.rows });
+  } catch (error) {
+    console.error('Error fetching popular businesses:', error);
+    res.status(500).json({ error: 'Failed to fetch popular businesses' });
+  }
+});
+
 // GET /api/businesses/nearby - Get businesses near a location within a radius
 router.get('/nearby', async (req: Request, res: Response) => {
   try {

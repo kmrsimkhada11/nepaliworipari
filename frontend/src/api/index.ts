@@ -40,6 +40,15 @@ export async function fetchBusinesses(params: {
   return response.json();
 }
 
+export async function fetchPopularBusinesses(state: string = 'ALL', limit: number = 8): Promise<{ businesses: import('../types').Business[] }> {
+  const params = new URLSearchParams();
+  if (state !== 'ALL') params.append('state', state);
+  params.append('limit', limit.toString());
+  const response = await fetch(`${API_BASE}/businesses/popular?${params}`);
+  if (!response.ok) throw new Error('Failed to fetch popular businesses');
+  return response.json();
+}
+
 export async function fetchNearbyBusinesses(params: {
   lat: number;
   lng: number;
