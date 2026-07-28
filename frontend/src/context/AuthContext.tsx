@@ -24,6 +24,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return;
       }
 
+      // Set a timeout so the app doesn't stay loading forever if backend is cold
+      const timeout = setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
+
       try {
         const data = await getMe(token);
         setUser(data.user);
@@ -33,6 +38,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setToken(null);
         setUser(null);
       } finally {
+        clearTimeout(timeout);
         setIsLoading(false);
       }
     };

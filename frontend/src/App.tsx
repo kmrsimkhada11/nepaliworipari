@@ -204,14 +204,10 @@ function AppContent() {
       <div className="app">
         <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} onAddPostClick={() => setShowAuth(true)} searchValue={searchQuery} onSearchChange={handleSearch} locationEnabled={locationEnabled} radius={radius} onLocationToggle={handleLocationToggle} onRadiusChange={(r) => { setRadius(r); setCurrentPage(1); }} />
         <main className="main-content">
-          <CategoryGrid
-            parentCategories={parentCategories}
-            subcategories={[]}
-            selectedParent={null}
-            selectedSubcategory={null}
-            onParentSelect={handleParentSelect}
-            onSubcategorySelect={handleSubcategorySelect} onPostClick={() => setShowPostNeeded(true)}
-          />
+          <div className="loading">
+            <div className="loading-spinner"></div>
+            <p>Loading...</p>
+          </div>
         </main>
       </div>
     );
