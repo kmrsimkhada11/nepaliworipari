@@ -3160,6 +3160,48 @@ body {
 
 
 /* Mode Switch */
+.top-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 1.5rem;
+}
+
+.top-tab {
+  padding: 0.6rem 1.25rem;
+  border: none;
+  background: transparent;
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: all 0.2s;
+}
+
+.top-tab:hover {
+  background: var(--color-accent);
+  color: var(--color-text);
+}
+
+.top-tab.active {
+  background: var(--color-text);
+  color: var(--color-white);
+}
+
+/* Landing sections */
+.landing-section {
+  margin-bottom: 2.5rem;
+}
+
+.landing-section .section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
 .mode-bar {
   display: flex;
   align-items: center;

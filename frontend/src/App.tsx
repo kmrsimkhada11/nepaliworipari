@@ -217,8 +217,40 @@ function AppContent() {
     );
   }
 
+  // Top-level tab state (All, Homes, Experiences, Services)
+  const [activeTab, setActiveTab] = useState<'all' | 'homes' | 'experiences' | 'services'>('all');
+
+  // Map tabs to category slugs
+  const tabCategorySlugs: Record<string, string[]> = {
+    homes: ['real-estate-category', 'rental'],
+    experiences: ['events-celebrations', 'food-dining', 'grocery-products'],
+    services: ['home-services', 'health-wellness', 'finance-legal', 'education-career', 'trade-services', 'technology-business'],
+  };
+
+  const getFilteredCategories = () => {
+    if (activeTab === 'all') return parentCategories;
+    const slugs = tabCategorySlugs[activeTab] || [];
+    return parentCategories.filter(c => slugs.includes(c.slug));
+  };
+
   const homePage = (
     <main className="main-content">
+      {/* Top tabs: All, Homes, Experiences, Services */}
+      <div className="top-tabs">
+        <button className={`top-tab ${activeTab === 'all' ? 'active' : ''}`} onClick={() => { setActiveTab('all'); handleParentSelect(null); }}>
+          All
+        </button>
+        <button className={`top-tab ${activeTab === 'homes' ? 'active' : ''}`} onClick={() => { setActiveTab('homes'); handleParentSelect(null); }}>
+          Homes
+        </button>
+        <button className={`top-tab ${activeTab === 'experiences' ? 'active' : ''}`} onClick={() => { setActiveTab('experiences'); handleParentSelect(null); }}>
+          Experiences
+        </button>
+        <button className={`top-tab ${activeTab === 'services' ? 'active' : ''}`} onClick={() => { setActiveTab('services'); handleParentSelect(null); }}>
+          Services
+        </button>
+      </div>
+
       {/* Mode switch - logged in only */}
       {user && (
         <div className="mode-bar">
@@ -261,56 +293,124 @@ function AppContent() {
         </>
       ) : (
         <>
-
           {/* My Requests - shows user's posted requests */}
           <MyRequests onPostClick={() => setShowPostNeeded(true)} />
 
-          {/* Breadcrumb navigation */}
-          {(selectedParent || selectedSubcategory) && (
-            <div className="breadcrumb">
-              <button className="breadcrumb-btn" onClick={() => { handleParentSelect(null); }}>
-                ← All Categories
-              </button>
-              {selectedParent && selectedSubcategory && (
-                <button className="breadcrumb-btn" onClick={() => handleSubcategorySelect(null)}>
-                  ← {parentCategories.find(c => c.slug === selectedParent)?.name || 'Back'}
-                </button>
+          {/* If a category/subcategory is drilled into */}
+          {(selectedParent || selectedSubcategory || debouncedSearch) ? (
+            <>
+              {/* Breadcrumb navigation */}
+              {(selectedParent || selectedSubcategory) && (
+                <div className="breadcrumb">
+                  <button className="breadcrumb-btn" onClick={() => { handleParentSelect(null); }}>
+                    ← All Categories
+                  </button>
+                  {selectedParent && selectedSubcategory && (
+                    <button className="breadcrumb-btn" onClick={() => handleSubcategorySelect(null)}>
+                      ← {parentCategories.find(c => c.slug === selectedParent)?.name || 'Back'}
+                    </button>
+                  )}
+                </div>
               )}
-            </div>
-          )}
 
-          {/* Step 1: Show parent categories */}
-          {!selectedParent && (
-            <CategoryGrid
-              parentCategories={parentCategories}
-              subcategories={[]}
-              selectedParent={null}
-              selectedSubcategory={null}
-              onParentSelect={handleParentSelect}
-              onSubcategorySelect={handleSubcategorySelect} onPostClick={() => setShowPostNeeded(true)}
-            />
-          )}
+              {/* Subcategories */}
+              {selectedParent && !selectedSubcategory && (
+                <CategoryGrid
+                  parentCategories={parentCategories}
+                  subcategories={subcategories}
+                  selectedParent={selectedParent}
+                  selectedSubcategory={null}
+                  onParentSelect={handleParentSelect}
+                  onSubcategorySelect={handleSubcategorySelect}
+                  onPostClick={() => setShowPostNeeded(true)}
+                />
+              )}
 
-          {/* Step 2: Show subcategories when parent is selected */}
-          {selectedParent && !selectedSubcategory && (
-            <CategoryGrid
-              parentCategories={parentCategories}
-              subcategories={subcategories}
-              selectedParent={selectedParent}
-              selectedSubcategory={null}
-              onParentSelect={handleParentSelect}
-              onSubcategorySelect={handleSubcategorySelect} onPostClick={() => setShowPostNeeded(true)}
-            />
-          )}
+              {/* Businesses */}
+              {(selectedSubcategory || debouncedSearch) && (
+                <BusinessList
+                  businesses={businesses}
+                  pagination={pagination}
+                  loading={loading}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </>
+          ) : (
+            <>
+              {/* "All" tab landing page with sections */}
+              {activeTab === 'all' ? (
+                <>
+                  {/* Most Popular Services */}
+                  <section className="landing-section">
+                    <h2 className="section-title">Most Popular Services</h2>
+                    <CategoryGrid
+                      parentCategories={parentCategories.slice(0, 6)}
+                      subcategories={[]}
+                      selectedParent={null}
+                      selectedSubcategory={null}
+                      onParentSelect={handleParentSelect}
+                      onSubcategorySelect={handleSubcategorySelect}
+                      onPostClick={() => setShowPostNeeded(true)}
+                    />
+                  </section>
 
-          {/* Step 3: Show businesses when subcategory is selected or search is active */}
-          {(selectedSubcategory || debouncedSearch) && (
-            <BusinessList
-              businesses={businesses}
-              pagination={pagination}
-              loading={loading}
-              onPageChange={handlePageChange}
-            />
+                  {/* Available Services */}
+                  <section className="landing-section">
+                    <h2 className="section-title">Available Services</h2>
+                    <BusinessList
+                      businesses={businesses.slice(0, 8)}
+                      pagination={null}
+                      loading={loading}
+                      onPageChange={() => {}}
+                    />
+                  </section>
+
+                  {/* People Looking For */}
+                  <section className="landing-section">
+                    <ServiceWantedFeed />
+                  </section>
+
+                  {/* Explore Nearby */}
+                  {locationEnabled && userLat && userLng && (
+                    <section className="landing-section">
+                      <h2 className="section-title">Explore Nearby</h2>
+                      <BusinessList
+                        businesses={businesses}
+                        pagination={pagination}
+                        loading={loading}
+                        onPageChange={handlePageChange}
+                      />
+                    </section>
+                  )}
+
+                  {/* All categories */}
+                  <section className="landing-section">
+                    <h2 className="section-title">Browse All Categories</h2>
+                    <CategoryGrid
+                      parentCategories={parentCategories}
+                      subcategories={[]}
+                      selectedParent={null}
+                      selectedSubcategory={null}
+                      onParentSelect={handleParentSelect}
+                      onSubcategorySelect={handleSubcategorySelect}
+                      onPostClick={() => setShowPostNeeded(true)}
+                    />
+                  </section>
+                </>
+              ) : (
+                /* Filtered tabs (Homes, Experiences, Services) */
+                <CategoryGrid
+                  parentCategories={getFilteredCategories()}
+                  subcategories={[]}
+                  selectedParent={null}
+                  selectedSubcategory={null}
+                  onParentSelect={handleParentSelect}
+                  onSubcategorySelect={handleSubcategorySelect}
+                  onPostClick={() => setShowPostNeeded(true)}
+                />
+              )}
+            </>
           )}
         </>
       )}
