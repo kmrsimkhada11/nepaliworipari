@@ -45,6 +45,7 @@ function AppContent() {
   const [showProfile, setShowProfile] = useState(false);
   const [showPostNeeded, setShowPostNeeded] = useState(false);
   const [mode, setMode] = useState<'seeker' | 'provider'>('seeker');
+  const [activeTab, setActiveTab] = useState<'all' | 'homes' | 'experiences' | 'services'>('all');
 
   const isProvider = mode === 'provider';
 
@@ -212,9 +213,6 @@ function AppContent() {
       </div>
     );
   }
-
-  // Top-level tab state (All, Homes, Experiences, Services)
-  const [activeTab, setActiveTab] = useState<'all' | 'homes' | 'experiences' | 'services'>('all');
 
   // Map tabs to category slugs
   const tabCategorySlugs: Record<string, string[]> = {
