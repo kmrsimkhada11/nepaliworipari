@@ -121,9 +121,11 @@ export function Header({
                   {unreadMessages > 0 && <span className="notification-badge">{unreadMessages}</span>}
                 </button>
                 <button className="hamburger-btn" onClick={() => setMenuOpen(true)} aria-label="Menu">
-                  <span></span>
-                  <span></span>
-                  <span></span>
+                  <div className="hamburger-lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
                   <div className="hamburger-avatar">
                     {user.name.charAt(0).toUpperCase()}
                   </div>
@@ -135,9 +137,11 @@ export function Header({
                   Sign up
                 </button>
                 <button className="hamburger-btn" onClick={() => setMenuOpen(true)} aria-label="Menu">
-                  <span></span>
-                  <span></span>
-                  <span></span>
+                  <div className="hamburger-lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
                 </button>
               </div>
             )}

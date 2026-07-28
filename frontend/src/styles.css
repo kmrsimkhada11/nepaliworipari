@@ -982,12 +982,13 @@ body {
   }
 
   .hamburger-btn {
-    padding: 0.3rem 0.3rem 0.3rem 0.5rem;
+    padding: 0.3rem 0.3rem 0.3rem 0.6rem;
     height: 36px;
+    gap: 0.5rem;
   }
 
-  .hamburger-btn span {
-    width: 10px;
+  .hamburger-lines span {
+    width: 12px;
   }
 
   .hamburger-avatar {
@@ -2856,12 +2857,12 @@ body {
 .hamburger-btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   background: transparent;
   border: 1px solid var(--color-border);
   border-radius: 22px;
   cursor: pointer;
-  padding: 0.35rem 0.35rem 0.35rem 0.75rem;
+  padding: 0.4rem 0.4rem 0.4rem 0.85rem;
   transition: all 0.2s;
   height: 42px;
 }
@@ -2870,16 +2871,19 @@ body {
   box-shadow: var(--shadow-md);
 }
 
-.hamburger-btn span {
+.hamburger-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hamburger-lines span {
   display: block;
-  width: 12px;
-  height: 1.5px;
+  width: 14px;
+  height: 2px;
   background: var(--color-text);
   border-radius: 2px;
 }
-
-.hamburger-btn span:nth-child(1) { margin-bottom: 3px; }
-.hamburger-btn span:nth-child(2) { margin-bottom: 3px; }
 
 .hamburger-avatar {
   width: 30px;
