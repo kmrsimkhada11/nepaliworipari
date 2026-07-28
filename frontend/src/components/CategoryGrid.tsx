@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { Category } from '../types';
+import { CategoryIcon } from './CategoryIcons';
 
 interface CategoryGridProps {
   parentCategories: Category[];
@@ -72,7 +73,7 @@ export function CategoryGrid({
                 className="category-item"
                 onClick={() => onSubcategorySelect(sub.slug)}
               >
-                <span className="category-item-icon">{sub.icon}</span>
+                <CategoryIcon slug={sub.slug} fallbackEmoji={sub.icon} />
                 <span className="category-item-name">{sub.name}</span>
               </button>
             ))}
@@ -107,7 +108,7 @@ export function CategoryGrid({
               className={`category-item ${selectedParent === category.slug ? 'active' : ''}`}
               onClick={() => onParentSelect(category.slug)}
             >
-              <span className="category-item-icon">{category.icon}</span>
+              <CategoryIcon slug={category.slug} fallbackEmoji={category.icon} />
               <span className="category-item-name">{category.name}</span>
             </button>
           ))}

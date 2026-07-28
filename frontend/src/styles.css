@@ -534,6 +534,20 @@ body {
   line-height: 1;
 }
 
+.category-svg-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: currentColor;
+}
+
+.category-svg-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
 .category-item-name {
   font-size: 0.7rem;
   font-weight: 600;
