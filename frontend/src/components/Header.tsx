@@ -12,6 +12,7 @@ interface HeaderProps {
   onRequestsClick: () => void;
   onProfileClick: () => void;
   onLogoClick: () => void;
+  onAddPostClick?: () => void;
   searchValue?: string;
   onSearchChange?: (query: string) => void;
   locationEnabled?: boolean;
@@ -28,6 +29,7 @@ export function Header({
   onRequestsClick,
   onProfileClick,
   onLogoClick,
+  onAddPostClick,
   searchValue = '',
   onSearchChange,
   locationEnabled,
@@ -112,6 +114,9 @@ export function Header({
           <div className="header-right">
             {user ? (
               <div className="user-menu">
+                <button className="become-host-btn" onClick={onAddPostClick}>
+                  Add your post
+                </button>
                 <button className="auth-btn messages-btn" onClick={onRequestsClick} title="Service Requests">
                   📋
                   {pendingRequests > 0 && <span className="notification-badge">{pendingRequests}</span>}
@@ -133,8 +138,8 @@ export function Header({
               </div>
             ) : (
               <div className="user-menu">
-                <button className="auth-btn nav-login-btn" onClick={onLoginClick}>
-                  Sign up
+                <button className="become-host-btn" onClick={onAddPostClick || onLoginClick}>
+                  Add your post
                 </button>
                 <button className="hamburger-btn" onClick={() => setMenuOpen(true)} aria-label="Menu">
                   <div className="hamburger-lines">

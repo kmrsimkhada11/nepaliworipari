@@ -202,7 +202,7 @@ function AppContent() {
   if (authLoading) {
     return (
       <div className="app">
-        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} searchValue={searchQuery} onSearchChange={handleSearch} locationEnabled={locationEnabled} radius={radius} onLocationToggle={handleLocationToggle} onRadiusChange={(r) => { setRadius(r); setCurrentPage(1); }} />
+        <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} onAddPostClick={() => setShowAuth(true)} searchValue={searchQuery} onSearchChange={handleSearch} locationEnabled={locationEnabled} radius={radius} onLocationToggle={handleLocationToggle} onRadiusChange={(r) => { setRadius(r); setCurrentPage(1); }} />
         <main className="main-content">
           <CategoryGrid
             parentCategories={parentCategories}
@@ -219,7 +219,7 @@ function AppContent() {
 
   const homePage = (
     <main className="main-content">
-      {/* Mode switch */}
+      {/* Mode switch - logged in only */}
       {user && (
         <div className="mode-bar">
           <div className="mode-switch">
@@ -236,14 +236,6 @@ function AppContent() {
               ➕ Listing
             </button>
           </div>
-        </div>
-      )}
-
-      {!user && (
-        <div className="mode-bar">
-          <button className="airbnb-btn-primary" onClick={() => setShowAuth(true)}>
-            Add Your Post
-          </button>
         </div>
       )}
 
@@ -327,7 +319,7 @@ function AppContent() {
 
   return (
     <div className="app">
-      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} searchValue={searchQuery} onSearchChange={handleSearch} locationEnabled={locationEnabled} radius={radius} onLocationToggle={handleLocationToggle} onRadiusChange={(r) => { setRadius(r); setCurrentPage(1); }} />
+      <Header selectedState={selectedState} onStateChange={handleStateChange} onLoginClick={() => setShowAuth(true)} onMessagesClick={() => setShowMessages(true)} onRequestsClick={() => setShowRequests(true)} onProfileClick={() => setShowProfile(true)} onLogoClick={() => { setSelectedParent(null); setSelectedSubcategory(null); setSearchQuery(""); setDebouncedSearch(""); setMode("seeker"); }} onAddPostClick={() => { if (!user) { setShowAuth(true); } else { setShowPostNeeded(true); } }} searchValue={searchQuery} onSearchChange={handleSearch} locationEnabled={locationEnabled} radius={radius} onLocationToggle={handleLocationToggle} onRadiusChange={(r) => { setRadius(r); setCurrentPage(1); }} />
 
       <Routes>
         <Route path="/" element={homePage} />

@@ -3727,6 +3727,24 @@ body {
   background: var(--color-accent);
 }
 
+/* Become a Host / Add Post button - Airbnb style */
+.become-host-btn {
+  background: transparent;
+  color: var(--color-text);
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 22px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.become-host-btn:hover {
+  background: var(--color-accent);
+}
+
 
 /* Postcode Lookup */
 .postcode-lookup {
